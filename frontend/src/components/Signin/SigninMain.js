@@ -37,17 +37,17 @@ function SigninMain(){
 
     
 
-    const handleSubmit = () => {      
+    const handleSubmit = (event) => {      
                
-    const signinFormData = new FormData();
-     signinFormData.append("lastname", stateSigninForm.lastname)
-     signinFormData.append("firstname", stateSigninForm.firstname)
-     signinFormData.append("username", stateSigninForm.email)
-     signinFormData.append("password", stateSigninForm.password)  
+    
 
      try {
         console.log('Hello on submit')
+        console.log(stateSigninForm.lastname)
         console.log(stateSigninForm.firstname)
+        console.log(stateSigninForm.username)
+        console.log(stateSigninForm.password)
+
         
        
         
@@ -56,7 +56,7 @@ function SigninMain(){
       }
 
 
-    
+      event.preventDefault();
 
     }  
     
