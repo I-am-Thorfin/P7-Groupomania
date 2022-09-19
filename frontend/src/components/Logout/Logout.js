@@ -2,7 +2,7 @@ function Logout (){
 
     return (
         <div>
-            <i class="fas fa-sign-out-alt"></i>
+            <i className="fas fa-sign-out-alt"></i>
             <p>Logout</p>
         </div>
     )

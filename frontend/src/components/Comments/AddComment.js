@@ -13,7 +13,7 @@ function AddComments (){
             <div className="addcomment_baseform">
                 <form className ="addcomment__form">
                     <label htmlFor="AddComment">
-                       <i class="far fa-comment fa-2x"></i>
+                       <i className="far fa-comment fa-2x"></i>
                     </label>
                     <input type='text' id="AddComment" placeholder="Ecrivez nous ici !"> 
                     </input>

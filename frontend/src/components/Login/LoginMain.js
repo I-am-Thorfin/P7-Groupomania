@@ -13,12 +13,12 @@ function LoginMain(){
             <div className="login_baseform">
                 <form className ="login__form">
                     <label htmlFor="Login">
-                        <i class="fas fa-sign-in-alt"></i>
+                        <i className="fas fa-sign-in-alt"></i>
                     </label>
                     <input type='text' id="Login" placeholder="Votre adresse mail de connexion"> 
                     </input>
                     <label htmlFor="Password">
-                        <i class="fas fa-unlock-alt"></i>
+                        <i className="fas fa-unlock-alt"></i>
                     </label>
                     <input type='password' id="Password" placeholder="Votre mot de passe"> 
                     </input>

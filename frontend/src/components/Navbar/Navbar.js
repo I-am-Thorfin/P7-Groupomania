@@ -51,7 +51,7 @@ export default function Navbar() {
             </ul>
           )}  
 
-            <button onClick={toggleNav} className="navbtn"><i class="fas fa-bars"></i></button>
+            <button onClick={toggleNav} className="navbtn"><i className="fas fa-bars"></i></button>
         </div>
     </nav>
   )

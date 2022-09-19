@@ -1,7 +1,67 @@
+import { useState } from 'react';
 import './Signin.css'
 
 
 function SigninMain(){
+
+    const [stateSigninForm, setstateSigninForm] = useState({
+        firstname : '',
+        lastname :'',
+        mail :'',
+        password:''
+    });
+
+    const handleChange = (event) => {
+        setstateSigninForm({
+          ...stateSigninForm,
+          [event.target.id]: event.target.value
+        });
+      }
+
+    console.log(`
+    Nom :${stateSigninForm.lastname}
+    Prénom :${stateSigninForm.firstname}
+    mail :${stateSigninForm.mail}
+    password :${stateSigninForm.firstname}`
+    )
+
+
+    const lastname = 'stateSigninForm.lastname';
+    const firstname ='stateSigninForm.firstname';
+    const mail ='stateSigninForm.mail';
+    const password ='stateSigninForm.firstname';
+
+    let user = { lastname, firstname, mail, password }
+
+
+
+    
+
+    const handleSubmit = () => {      
+               
+    const signinFormData = new FormData();
+     signinFormData.append("lastname", stateSigninForm.lastname)
+     signinFormData.append("firstname", stateSigninForm.firstname)
+     signinFormData.append("username", stateSigninForm.email)
+     signinFormData.append("password", stateSigninForm.password)  
+
+     try {
+        console.log('Hello on submit')
+        console.log(stateSigninForm.firstname)
+        
+       
+        
+      } catch(error) {
+        console.log(error)
+      }
+
+
+    
+
+    }  
+    
+    
+
 
     return (
 
@@ -11,26 +71,42 @@ function SigninMain(){
             </div>
             <div className="signin__style"></div>
             <div className="signin_baseform">
-                <form className ="signin__form">
-                    <label htmlFor="name">
-                     <i class="fas fa-user"></i>
+                <form className ="signin__form" onSubmit={handleSubmit}>
+                    <label htmlFor="lastname">
+                     <i className="fas fa-user"></i>
                     </label>
-                    <input type='text' id="name" placeholder="Nom de Famille"> 
+                    <input type='text' 
+                    id="lastname" 
+                    placeholder="Nom de Famille" 
+                    value={stateSigninForm.lastname} 
+                    onChange={handleChange}> 
                     </input>
                     <label htmlFor="firstname">
-                     <i class="fas fa-user"></i>
+                     <i className="fas fa-user"></i>
                     </label>
-                    <input type='text' id="firstname" placeholder="Prénom"> 
+                    <input type='text' 
+                    id="firstname" 
+                    placeholder="Prénom" 
+                    value={stateSigninForm.firstname} 
+                    onChange={handleChange}> 
                     </input>
-                    <label htmlFor="Login">
-                        <i class="fas fa-sign-in-alt"></i>
+                    <label htmlFor="mail">
+                        <i className="fas fa-sign-in-alt"></i>
                     </label>
-                    <input type='text' id="Login" placeholder="Votre adresse mail de connexion"> 
+                    <input type='text' 
+                    id="mail" 
+                    placeholder="Votre adresse mail de connexion" 
+                    value={stateSigninForm.mail} 
+                    onChange={handleChange}> 
                     </input>
-                    <label htmlFor="Login">
-                        <i class="fas fa-unlock-alt"></i>
+                    <label htmlFor="password">
+                        <i className="fas fa-unlock-alt"></i>
                     </label>
-                    <input type='password' id="Login" placeholder="choisissez votre mot de passe"> 
+                    <input type='password' 
+                    id="password" 
+                    placeholder="choisissez votre mot de passe" 
+                    value={stateSigninForm.password} 
+                    onChange={handleChange}> 
                     </input>
                     <button>S'inscrire</button>
                 </form>
