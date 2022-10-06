@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/user');
-const sauceRoutes = require('./routes/sauce');
+const commentRoutes = require('./routes/comment');
 const path = require("path");
 const app = express();
 
@@ -35,7 +35,7 @@ app.disable('x-powered-by');
 
 app.use(express.json()) //Pour formater le tout en json afin que le code soit lisible.
 app.use('/api/auth', userRoutes); // Pour pointer vers la route User
-app.use('/api/sauces', sauceRoutes); // Pour pointer la route sauce
+app.use('/api/comments', commentRoutes); // Pour pointer la route commentaire
 app.use('/images', express.static(path.join(__dirname, `images`))); // Pour faire fonctionner multer
 
 

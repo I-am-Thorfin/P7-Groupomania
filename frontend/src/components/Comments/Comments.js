@@ -1,5 +1,6 @@
 import './Comments.css'
 import avatar from './roll-safe-meme-1.jpg';
+import photo from './forettest.jpeg'
 
 
 function Comments (){
@@ -10,10 +11,19 @@ function Comments (){
             <div className="comment__profil">
                 <img src={avatar} className="comment__profil--avatar" alt="logo Groupomania" />
                 <div className="comment__profil--name">Prénom Nom a partagé :</div>
+                <div className ="comment__profil--button">  
+                    <i className="fas fa-trash-alt"></i>
+                    <i className="fas fa-cogs"></i>
+                </div>
+                
             </div>
             <div className="comment__intro"></div>
-            <div className="comment__base">
-                <div className="comment__base--txt">
+                <div className="comment__base">   
+                    <img className="comment__base--img"
+                       src={photo}
+                       alt="Publication de Prénom et Nom"                     
+                       />    
+                    <div className="comment__base--txt">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit, nibh et elementum iaculis, enim ex aliquam nibh, sed lobortis nulla risus in sem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla ut lorem id nunc consectetur blandit eu a mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Etiam ultricies quam id leo rutrum, in dictum tellus rutrum. Aenean pulvinar ipsum augue, quis sodales massa varius et. Nam consectetur elit orci, eget fermentum lacus pretium ut. Maecenas luctus eros lorem, sit amet ultrices nibh posuere in. Donec pellentesque aliquet purus a pharetra. Phasellus fermentum velit ex, fringilla porta massa accumsan pharetra.
 
                     Aliquam at commodo nunc. Fusce non dolor turpis. Etiam vulputate, mauris feugiat commodo sagittis, eros enim gravida nisi, id fringilla nulla sem id nisl. Integer quis tortor ac turpis consectetur congue sit amet ac lorem. Nullam gravida gravida est sit amet pulvinar. Suspendisse porttitor elit eros, eget ultrices enim luctus ac. Aenean faucibus venenatis bibendum. Aenean id lobortis urna.
@@ -25,6 +35,21 @@ function Comments (){
                     Nam blandit auctor lorem, in sagittis risus dignissim id. Proin nec dignissim ex, ut feugiat urna. Sed posuere tincidunt metus, ut posuere magna egestas vel. Phasellus sit amet tincidunt lacus. Integer sit amet luctus nisl. Sed pharetra, ex at scelerisque vehicula, nulla libero gravida elit, mollis mollis sapien nisl at ipsum. Maecenas ac luctus odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
 
                     Vestibulum ullamcorper volutpat accumsan. Nulla facilisi. Maecenas ex ligula, rhoncus in vestibulum at, porta et nisl. Morbi ullamcorper, mauris ut eleifend lacinia, urna magna ornare eros, efficitur tincidunt mi lectus eu urna. Vivamus aliquam placerat tortor eu semper. Proin et felis volutpat, blandit lectus a, pharetra mauris. Proin sodales turpis quis velit blandit, eu auctor tellus efficitur. Nam sit amet metus libero. Quisque cursus ut ante quis ornare.
+                </div>
+                <div className="base__likeordislike">
+                    <div className="base__likeordislike--like">
+                        
+                        <p>1</p>
+                        <i className="fas fa-thumbs-up"></i>
+                        
+                    </div>
+                    <div className="base__likeordislike--dislike">
+                        
+                        <i className="fas fa-thumbs-down"></i>
+                        <p>2</p>
+                    </div>
+                </div>
+                <div className="comment__base--end">                   
                 </div>
                 
             </div>

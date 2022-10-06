@@ -1,4 +1,4 @@
-.signin__container {    
+.signup__container {    
     background:  #FFD7D7;
     max-width: 450px;
     height: auto;
@@ -8,7 +8,7 @@
     margin: 20px;
     
 }
-.signin__container--titre {
+.signup__container--titre {
 
     background: linear-gradient(to right, #282c34
     ,  #4E5166);
@@ -23,7 +23,7 @@
     font-weight: 600;
 }
 
-.signin__style {
+.signup__style {
     background: linear-gradient(to right, #FD2D01
     , #FFD7D7);
     width: 100%;
@@ -34,7 +34,7 @@
 
 
 
-.signin__form {
+.signup__form {
     display: flex;    
     justify-content: center;
     align-items: center;
@@ -42,19 +42,19 @@
     
 }
 
-.signin__form>input {
+.signup__form>input {
 width: 300px;
 margin-left: 20px;
 margin-right: 0%;
 margin-top: 10px;
 height: 25px;
 }
-.signin__form>label>i {
+.signup__form>label>i {
     margin-left: 30px;
     margin-right: 30px;
 }
 
-.signin__form>button {
+.signup__form>button {
     margin: 10px;
     
     padding: 5px;

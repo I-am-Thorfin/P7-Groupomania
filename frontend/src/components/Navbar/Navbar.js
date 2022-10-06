@@ -1,17 +1,24 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import './Navbar.css'
 import logo from './icon-left-font-monochrome-white.svg';
 import Logout from '../Logout/Logout';
 import Login from '../Login/Login';
+import Signup from '../Signup/Signup';
 import Myprofil from '../Profil/Myprofil';
 import { Link } from 'react-router-dom';
+import {AuthContext} from "../../contexts/AuthContext"
+
 
 
 
 export default function Navbar() {
+  
   const [toggleMenu, setToggleMenu] = useState (false);
   const [largeur, setLargeur] = useState (window.innerWidth);
-  
+
+  const {auth} = useContext(AuthContext);  
+
+  console.log(auth)
 
   const toggleNav = () => {
     setToggleMenu(!toggleMenu)
@@ -27,9 +34,9 @@ export default function Navbar() {
     return () => {
         window.removeEventListener('resize', changeWidth);
     }
-
   }, []
   )
+ 
 
   return (
     <nav>
@@ -39,18 +46,31 @@ export default function Navbar() {
         <div className='nav__bar'>
           {(toggleMenu || largeur > 762) && (  
             <ul className="nav__list">
-             <li className="nav__list--items">
-                 <Myprofil/>
-             </li>
-             <li className="nav__list--items">
-                <Login/>
-             </li>
-             <li className="nav__list--items">
-                <Logout/>
-             </li>
+             {
+             (!auth.isLogin && (
+              <>
+                <li className="nav__list--items">
+                  <Login/>
+                </li>
+                <li className="nav__list--items">
+                  <Signup/>
+                </li>
+              </>
+             )) 
+             ||
+              (
+                <>
+                  <li className="nav__list--items">
+                    <Myprofil/>
+                  </li>
+                  <li className="nav__list--items">
+                    <Logout/>
+                  </li>
+                </>
+              ) 
+              }             
             </ul>
           )}  
-
             <button onClick={toggleNav} className="navbtn"><i className="fas fa-bars"></i></button>
         </div>
     </nav>
