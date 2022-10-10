@@ -21,7 +21,30 @@ exports.getOneComment = (req, res, next) => {
 
 ////* CREATION D'UN COMMENTAIRE *////
 
+exports.createComment = (req, res, next) => {
+    console.log("///////req.body/////")
+    console.log(req.body)
 
+    // Ce qui venait du cours sur le backend : 
+    //const commentObject = JSON.parse(req.body.comment)
+
+    console.log("///////req.body/////")
+    console.log(req.body)
+
+    console.log("///////req.body.imageURL:// FROM COMMENT.JS///")
+    console.log(req.body.imageUrl)
+    
+    const commentObject = req.body
+    delete commentObject._id
+    const comment = new Comment({
+        ...commentObject,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.File}`
+    });
+    console.log("Comment",req.body) 
+    comment.save()      
+        .then(() => res.status(201).json({ message: 'Commentaire !' }))
+        .catch(error => res.status(400).json({ error }))
+};
 
 
 

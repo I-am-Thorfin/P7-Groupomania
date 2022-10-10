@@ -18,6 +18,7 @@ export function hasAuthenticated() {
 export function login(credentials) {
     return axios
     .post('http://localhost:8000/api/auth/login', credentials)
+    
     .then(reponse => reponse.data.token
          )
     .then(token => { addItem('key_token', token);
@@ -46,20 +47,24 @@ export function createNewUser(credentials) {
     .then( console.log("Compte Créé"))
 }
 
-export function getOneUser() {
+export function getOneUser(userid) {
     const token = getItem('key_token');
-    const { userId } = jwtDecode(token)
-    
-    console.log (userId)
+   
     const config = {
         headers : { Authorization: `Bearer ${token}`}
     };
 
     return axios
-    .get(`http://localhost:8000/api/auth/633c673b6f787d8e8d5f8148`, config)
-    .then(response => console.log(response.data)
-        )
-    .then( console.log("check user"))
+    .get(`http://localhost:8000/api/auth/${userid}`, config)
+    .then(response => { const getUserID = response.data
+
+        console.log(getUserID)
+        return getUserID
+
+     })
+    .then( console.log("check user")
+    
+    )
 }
 
 export function controlAdmin() {
@@ -79,27 +84,52 @@ function tokenIsAdmin (token) {
     return false;
 }
 
-export function userIDfromtoken () {
+
+
+export function userIdFromToken () {
 
     if (localStorage.getItem("key_token") !== null) {
-
     const token = getItem('key_token');
     const { userId } = jwtDecode(token)
     console.log ("//result from userIdfromtoken//")
     console.log(userId)
     console.log ("//result from userIdfromtoken END //")
-
     return userId   
     }
+    return ""  
+}
 
-    return ""
 
-    
+export function userLastNameFromToken () {
+
+    if (localStorage.getItem("key_token") !== null) {
+    const token = getItem('key_token');
+    const { lastname } = jwtDecode(token)
+    console.log ("//result from userlastnamefromtoken//")
+    console.log(lastname)
+    console.log ("//result from userlastnamefromtoken END //")
+    return lastname   
+    }
+    return ""  
+}
+
+export function userFirstNameFromToken () {
+
+    if (localStorage.getItem("key_token") !== null) {
+    const token = getItem('key_token');
+    const { firstname } = jwtDecode(token)
+    console.log ("//result from userfirstnamefromtoken//")
+    console.log(firstname)
+    console.log ("//result from userfirstnamefromtoken END //")
+    return firstname   
+    }
+    return ""  
 }
 
 
 
-export function createNewComment(credentials) {
+
+export function createNewComment(Statedecreationdecommentaire) {
     const token = getItem('key_token');
     
     const config = {
@@ -107,7 +137,8 @@ export function createNewComment(credentials) {
     };
 
     return axios
-    .post(`http://localhost:8000/api/comments`, credentials, config)
+    .post(`http://localhost:8000/api/comments`, Statedecreationdecommentaire, config)
+    
     .then(response => console.log(response.data)
         )
     .then( console.log("Commentaire posté"));

@@ -13,22 +13,29 @@ function AddComments (){
     const [stateAddCommentForm, setStateAddCommentForm] = useState({
         userId : auth.userId,
         commentTxt : "",
-        imageUrl :""
+        userlastname : auth.lastname,
+        userfirstname :auth.firstname
     });
 
-    //const handleChange1 = (event) => {
-      //  setstateAddCommentForm({
-        //  ...stateAddCommentForm,
-         // [event.target.id]: event.target.value
-        //});
-     // }
-    
-      const handleChange = ({currentTarget}) => {
+    const handleChange = (event) => {
+      setStateAddCommentForm({
+        ...stateAddCommentForm,
+        [event.target.id]: event.target.value
+      });
+    } 
 
-        const {name, value} = currentTarget;
-        console.log(name, value)
-        setStateAddCommentForm({...stateAddCommentForm, [name]: value})
-    }  
+    const fileHandleChange = (event) => {
+
+      console.log("StateaddcommentForm :") 
+      console.log(event.target.files[0])
+      console.log("StateaddcommentForm END///")
+
+      setStateAddCommentForm ({...stateAddCommentForm, [event.target.id]: event.target.files[0]})
+    }
+    
+    console.log("StateaddcommentForm :")
+    console.log(stateAddCommentForm)
+    console.log("StateaddcommentForm END ///")
 
        
     
@@ -36,9 +43,9 @@ function AddComments (){
         event.preventDefault();       
 
         try { 
-          const response = await createNewComment ();
-          console.log(response)
-          console.log("Commentaire posté !")           
+          const response = await createNewComment(stateAddCommentForm);
+          console.log("Commentaire posté !")  
+          window.location.reload()          
          } catch(error) {
            console.log(error)
          }
@@ -70,7 +77,7 @@ function AddComments (){
                     <i className="fas fa-images"></i> Une photo à nous partager ?
                     </label>
                     <input type='file' id="imageUrl" name="imageUrl" accept="image/png, image/jpeg" 
-                    onChange={handleChange} > 
+                    onChange={fileHandleChange} > 
                     </input>
                     
                     <button>Envoyer</button>

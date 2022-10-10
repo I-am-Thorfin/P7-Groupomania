@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const commentSchema = mongoose.Schema({
     userId : { type: String, require : true},
+    userfirstname : { type: String, require : true},
+    userlastname : { type: String, require : true},
     commentTxt: {type: String, required: true},
     imageUrl: {type: String, required: false},
     likes: {type: Number, required: false, default: 0 },

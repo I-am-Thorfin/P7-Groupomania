@@ -3,12 +3,20 @@ import { useContext  } from 'react';
 import {AuthContext} from "../../contexts/AuthContext"
 
 
+
 function Myprofil (){
 
     const {auth, setAuth} = useContext(AuthContext);
     const linkUserId = auth.userId;
 
-    console.log()
+   
+
+    
+    
+    
+
+
+
 
     return (
         <Link to={`/profile/${linkUserId}`}><p> <i className="fas fa-user-alt"></i> Mon Profil</p></Link>        
