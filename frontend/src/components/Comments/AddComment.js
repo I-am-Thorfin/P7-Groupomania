@@ -1,12 +1,40 @@
 import './Addcomments.css'
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect, isValidElement } from 'react';
 import {AuthContext} from "../../contexts/AuthContext"
 import { createNewComment } from '../../services/AuthApi'
+import Comments from './Comments';
+import axios from 'axios'
+import { getItem } from '../../services/LocaleStorage'
 
 
 function AddComments (){
 
   const {auth, setAuth} = useContext(AuthContext);
+
+  const [ stateCommentsList, setStateCommentsList] = useState([])
+
+
+  useEffect(() => {
+
+    if (auth.isLogin ===false) { console.log("is login false")}
+
+    else {function getComment() {
+        const token = getItem('key_token');
+       
+        const config = {
+            headers : { Authorization: `Bearer ${token}`}
+        };
+    
+        return axios
+        .get(`http://localhost:8000/api/comments`, config)
+        .then(response => {  
+          setStateCommentsList( response.data )          
+         })  
+    }
+    getComment()}
+
+    
+}, [])
 
      
 
@@ -15,7 +43,7 @@ function AddComments (){
         commentTxt : "",
         userlastname : auth.lastname,
         userfirstname :auth.firstname
-    });
+});
 
     const handleChange = (event) => {
       setStateAddCommentForm({
@@ -23,6 +51,40 @@ function AddComments (){
         [event.target.id]: event.target.value
       });
     } 
+
+    const deleteElement = id => {
+      console.log(id)
+      
+      const filteredStateComment = stateCommentsList.filter( comment => {
+        return comment.id !== id;
+      })
+      setStateCommentsList (filteredStateComment)
+
+
+      function deleteComment() {
+        const token = getItem('key_token');
+       
+        const config = {
+            headers : { Authorization: `Bearer ${token}`}
+        };
+    
+        return axios
+        .delete(`http://localhost:8000/api/comments/${id}`, config)
+        .then(response => { 
+          console.log(response) 
+          const filteredStateComment = stateCommentsList.filter( comment => {
+            return comment._id !== id;
+          })
+          setStateCommentsList (filteredStateComment)
+          console.log("Le commentaire a bien été supprimé")
+
+                       
+         })
+           
+    }
+    deleteComment()  
+
+    }
 
     const fileHandleChange = (event) => {
 
@@ -37,6 +99,10 @@ function AddComments (){
     console.log(stateAddCommentForm)
     console.log("StateaddcommentForm END ///")
 
+    console.log("///// stateCommentsList ////")
+    console.log(stateCommentsList)
+    console.log("//// stateCommentsList ////")
+
        
     
       const handleSubmit = async event => {      
@@ -44,21 +110,19 @@ function AddComments (){
 
         try { 
           const response = await createNewComment(stateAddCommentForm);
+          console.log(response);
           console.log("Commentaire posté !")  
           window.location.reload()          
          } catch(error) {
            console.log(error)
          }
-   
-   
-         
-   
        }   
 
 
 
     return (
-
+<div>
+        <h2>Ajout d'un commentaire :</h2>
         <div className="addcomment__container">
             <div className="addcomment__intro">
                 <p>Vous souhaitez partager quelque chose ?</p>
@@ -82,10 +146,38 @@ function AddComments (){
                     
                     <button>Envoyer</button>
                 </form>
-            </div>
-        
+            </div> 
         </div>
-    )
+        <h2>Liste des commentaires</h2>
+        
+        <ul>
+
+          {
+          stateCommentsList.map((comment, index) => {
+            return (
+              < Comments
+              id= {comment._id}
+              userId = {comment.userId}
+              key={index}   
+              txt = {comment.commentTxt} 
+              firstname = {comment.userfirstname}
+              lastname = {comment.userlastname}  
+              like = {comment.likes}
+              dislike = {comment.dislikes}
+              userslikes = {comment.usersLikes}        
+              usersDislikes = {comment.usersDislikes}
+              delFunction ={deleteElement}
+              />
+            )
+
+
+          })
+          }
+          
+        </ul>
+</div>
+
+)
 
 }
 

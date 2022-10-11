@@ -1,4 +1,5 @@
 import Comments from '../Comments/Comments';
+
 import AddComments from '../Comments/AddComment';
 import React, {useContext} from 'react';
 import { Navigate } from 'react-router-dom';
@@ -32,8 +33,9 @@ console.log(auth)
             <>
                 {!auth.isLogin && <Navigate to="/login" />}
             </>
-            <AddComments/>     
-            <Comments/>  
+            
+            <AddComments/>   
+             
         </div>
     )
 }

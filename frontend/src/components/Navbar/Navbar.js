@@ -18,8 +18,6 @@ export default function Navbar() {
 
   const {auth} = useContext(AuthContext);  
 
-  console.log(auth)
-
   const toggleNav = () => {
     setToggleMenu(!toggleMenu)
   }
