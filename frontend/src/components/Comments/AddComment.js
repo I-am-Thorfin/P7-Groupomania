@@ -8,7 +8,7 @@ import { getItem } from '../../services/LocaleStorage'
 
 
 function AddComments (){
-
+  
   const {auth, setAuth} = useContext(AuthContext);
 
   const [ stateCommentsList, setStateCommentsList] = useState([])
@@ -52,6 +52,43 @@ function AddComments (){
       });
     } 
 
+    
+
+    const fileHandleChange = (event) => {
+
+      console.log("StateaddcommentForm :") 
+      console.log(event.target.files[0])
+      console.log("StateaddcommentForm END///")
+
+      setStateAddCommentForm ({...stateAddCommentForm, [event.target.id]: event.target.files[0]})
+    }
+    
+    console.log("StateaddcommentForm :")
+    console.log(stateAddCommentForm)
+    console.log("StateaddcommentForm END ///")
+
+    console.log("///// stateCommentsList ////")
+    console.log(stateCommentsList)
+    console.log("//// stateCommentsList ////")
+  
+    
+      const handleSubmit = async event => {      
+        event.preventDefault();       
+
+        try { 
+          const response = await createNewComment(stateAddCommentForm);
+          console.log(response);
+          console.log("Commentaire posté !")  
+          window.location.reload()          
+         } catch(error) {
+           console.log(error)
+         }
+       }   
+
+
+
+    // Fonction de suppression d'un commentaire : 
+    
     const deleteElement = id => {
       console.log(id)
       
@@ -80,43 +117,51 @@ function AddComments (){
 
                        
          })
+         .catch (error => (console.log(error)))
            
     }
     deleteComment()  
 
     }
 
-    const fileHandleChange = (event) => {
+    // Fonction Like et Dislike
+    const likeElement = (id, likes, dislikes, usersLikes ) => {
 
-      console.log("StateaddcommentForm :") 
-      console.log(event.target.files[0])
-      console.log("StateaddcommentForm END///")
+      const found = 
 
-      setStateAddCommentForm ({...stateAddCommentForm, [event.target.id]: event.target.files[0]})
+      console.log("Fonction pour liker !")
+      console.log("ID :")
+      console.log(id)
+      console.log("ID //END")
+
+      console.log("userslikes :")
+      console.log(usersLikes)
+      console.log("userslikes //END")
+
+     
+
+      console.log("likes :")
+      console.log(likes)
+      console.log("likes //END")
+
+      console.log("dislikes :")
+      console.log(dislikes)
+      console.log("dislikes //END")
+
+      
+
+
+
     }
-    
-    console.log("StateaddcommentForm :")
-    console.log(stateAddCommentForm)
-    console.log("StateaddcommentForm END ///")
 
-    console.log("///// stateCommentsList ////")
-    console.log(stateCommentsList)
-    console.log("//// stateCommentsList ////")
+    const dislikeElement = id => {
 
-       
-    
-      const handleSubmit = async event => {      
-        event.preventDefault();       
+      console.log("Fonction pour disliker")
+      console.log(id)
 
-        try { 
-          const response = await createNewComment(stateAddCommentForm);
-          console.log(response);
-          console.log("Commentaire posté !")  
-          window.location.reload()          
-         } catch(error) {
-           console.log(error)
-         }
-       }   
+    }
+
+
 
 
 
@@ -156,17 +201,19 @@ function AddComments (){
           stateCommentsList.map((comment, index) => {
             return (
               < Comments
-              id= {comment._id}
-              userId = {comment.userId}
+              id= {comment._id} // id devient notre référence pour l'ID du commentaire
+              userId = {comment.userId} 
               key={index}   
               txt = {comment.commentTxt} 
               firstname = {comment.userfirstname}
               lastname = {comment.userlastname}  
-              like = {comment.likes}
-              dislike = {comment.dislikes}
-              userslikes = {comment.usersLikes}        
+              likes = {comment.likes}
+              dislikes = {comment.dislikes}
+              usersLikes = {comment.usersLikes}        
               usersDislikes = {comment.usersDislikes}
               delFunction ={deleteElement}
+              likeFunction = {likeElement}
+              dislikeFunction = {dislikeElement}
               />
             )
 

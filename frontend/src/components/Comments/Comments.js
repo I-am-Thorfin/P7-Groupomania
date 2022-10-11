@@ -5,12 +5,17 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios'
 import { getItem } from '../../services/LocaleStorage'
 import {AuthContext} from "../../contexts/AuthContext"
+ 
 
 
 
 function Comments (props){
 
+const {auth} = useContext(AuthContext);  
+
    
+
+
 
     
 
@@ -23,9 +28,7 @@ function Comments (props){
 
         <div>
 
-<li className="comment__container">
-
-            
+<li className="comment__container">         
 
 
 <div className="comment__profil">
@@ -34,9 +37,23 @@ function Comments (props){
      {props.firstname} {props.lastname} a écrit :
 
 </div>
+
+
     <div className ="comment__profil--button">  
-        <button onClick={() => props.delFunction(props.id)}><i className="fas fa-trash-alt"></i></button>
-        <button><i className="fas fa-cogs"></i></button>
+        
+        {
+            ( ((props.userId == auth.userId) || (auth.isAdmin === true ) ) && (
+                <>
+                  <button onClick={() => props.delFunction(props.id)}><i className="fas fa-trash-alt"></i></button>
+                  <button><i className="fas fa-cogs"></i></button>
+                </>
+            )) 
+             
+        } 
+
+
+
+        
     </div>
     
 </div>
@@ -52,14 +69,14 @@ function Comments (props){
     <div className="base__likeordislike">
         <div className="base__likeordislike--like">
             
-            <p>{props.like}</p>
-            <i className="fas fa-thumbs-up"></i>
+            <p>{props.likes}</p>
+            <i className="fas fa-thumbs-up" onClick={() => props.likeFunction(props.id, props.likes, props.dislikes, props.usersLikes)}></i>
             
         </div>
         <div className="base__likeordislike--dislike">
             
-            <i className="fas fa-thumbs-down"></i>
-            <p>{props.dislike}</p>
+            <i className="fas fa-thumbs-down" onClick={() => props.dislikeFunction(props.id)}></i>
+            <p>{props.dislikes}</p>
         </div>
     </div>
     <div className="comment__base--end">                   
@@ -138,3 +155,19 @@ function Comments (props){
 }
 
 export default Comments;
+
+
+
+/*{
+    (props.userId !== auth.userId && (
+        <>
+        </>
+    )) 
+    ||
+    (
+        <>
+            <button onClick={() => props.delFunction(props.id)}><i className="fas fa-trash-alt"></i></button>
+            <button><i className="fas fa-cogs"></i></button>
+        </>
+    ) 
+} */

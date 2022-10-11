@@ -89,9 +89,12 @@ exports.deleteComment = (req, res, next) => {
                 const token = req.headers.authorization.split(' ')[1];
                 const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET'); 
                 const userId = decodedToken.userId;
+                const isAdmin = decodedToken.isAdmin;
                 console.log(comment.userId)
 
-                if (comment.userId !== userId) {
+                console.log(isAdmin)
+
+                if ( (comment.userId !== userId) && (isAdmin === false) ) {
                     res.status(403).json({
                         message: 'Vous ne pouvez pas supprimer ce commentaire !'
                     });
@@ -150,53 +153,6 @@ exports.likeOrDislike = (req, res, next) => {
 
 
 
-   /*console.log(req.body)
-
-   console.log(req.params)
-
-
-    if (req.body.like === 1) {
-        Comment.updateOne({ _id: req.params.id }, { $inc: { likes: req.body.like++ }, $push: { usersLiked: req.body.userId } })
-            .then((comment) => res.status(200).json({ message: 'Like ajouté !' }))
-            .catch(error => res.status(400).json({ error }))
-    } 
-    
-    else if (req.body.like === -1) {
-        Comment.updateOne({ _id: req.params.id }, { $inc: { dislikes: (req.body.like++) * -1 }, $push: { usersDisliked: req.body.userId } })
-            .then((comment) => res.status(200).json({ message: 'Dislike ajouté !' }))
-            .catch(error => res.status(400).json({ error }))
-    }
-    
-    else {
-
-        console.log("CAS OU LIKE = 0")
-        
-        Comment.findOne({ _id: req.params.id })
-            .then( Comment => {
-                console.log("Comment.find one résultat positif")
-                
-                if (Comment.usersLiked.includes(req.body.userId)) {
-
-                    console.log('Comment USERSLIKED INCLUDE REQ BODY USERID')
-                    Comment.updateOne({ _id: req.params.id }, { $pull:{ usersLiked: req.body.userId }, $inc:{ likes : -1 },   }  )
-                        .then((comment) => { res.status(200).json({ message: 'Like supprimé !' }) })
-                        .catch(error => res.status(400).json({ error }))
-                } 
-                else if (Comment.usersDisliked.includes(req.body.userId)) {
-                    console.log('Comment USERSDISLIKED INCLUDE REQ BODY USERID')
-                    console.log("comment.usersDisliked :")
-                    console.log(Comment.usersDisliked)
-                    console.log("comment.usersDisliked :/// END")
-                    Comment.updateOne({ _id: req.params.id }, { $pull: { usersDisliked: req.body.userId }, $inc: { dislikes: -1 } })
-                        .then((comment) => { res.status(200).json({ message: 'Dislike supprimé !' }) })
-                        .catch(error => res.status(400).json({ error }))
-                }
-            })
-            .catch(error => res.status(400).json({ error }))
-    }
-
-
-*/
 
 }
 
