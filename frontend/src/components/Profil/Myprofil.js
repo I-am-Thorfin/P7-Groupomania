@@ -9,15 +9,6 @@ function Myprofil (){
     const {auth, setAuth} = useContext(AuthContext);
     const linkUserId = auth.userId;
 
-   
-
-    
-    
-    
-
-
-
-
     return (
         <Link to={`/profile/${linkUserId}`}><p> <i className="fas fa-user-alt"></i> Mon Profil</p></Link>        
     )

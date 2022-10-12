@@ -56,10 +56,8 @@ export function getOneUser(userid) {
     return axios
     .get(`http://localhost:8000/api/auth/${userid}`, config)
     .then(response => { const getUserID = response.data
-
         console.log(getUserID)
         return getUserID
-
      })
     .then( console.log("check user")
     

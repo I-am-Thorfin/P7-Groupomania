@@ -19,15 +19,13 @@ function MyprofilMain (){
     const params = useParams();
     const profilParamsId = params.id
     const [getUser, setGetUser] = useState ( {
-        email : "",
-        firstname : "",
-        isadmin : false,
-        lastname : "",
-        password : "",
-        __v : 0,
-        _id : "",
+        
     }
     );
+    
+    
+
+    
 
     useEffect(() => {
 
@@ -85,11 +83,7 @@ function MyprofilMain (){
     return axios
     .delete(`http://localhost:8000/api/auth/${profilParamsId}`, config)
     .then(response => {  console.log(response)
-
-        if (auth.userId === profilParamsId) { console.log("L'Utilisateur a supprimé son propre compte") }
-
-        navigate("/home")
-         
+        if (auth.userId === profilParamsId) { console.log("L'utilisateur a supprimé son profil" ) } 
 
                  
      }) 

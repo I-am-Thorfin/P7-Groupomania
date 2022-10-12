@@ -1,7 +1,7 @@
 import './Addcomments.css'
 import { useState, useContext, useEffect, isValidElement } from 'react';
 import {AuthContext} from "../../contexts/AuthContext"
-import { createNewComment } from '../../services/AuthApi'
+import { createNewComment, FuncLikeOrDislike } from '../../services/CommentApi'
 import Comments from './Comments';
 import axios from 'axios'
 import { getItem } from '../../services/LocaleStorage'
@@ -10,13 +10,9 @@ import { getItem } from '../../services/LocaleStorage'
 
 function AddComments (){
   
-  
   const {auth, setAuth} = useContext(AuthContext);  
   const [ stateCommentsList, setStateCommentsList] = useState([])
-
-  
-
-
+  const [ watchForLike, setWatchForLike] = useState(1)
 
   ///////////// FONCTION DE RECCUPERATION DES COMMENTAIRE DEPUIS L'API  /////////////
   
@@ -33,7 +29,7 @@ function AddComments (){
       setStateCommentsList( response.data )          
      }) 
      .catch (error => (console.log(error))) 
-}
+  }
 
   ///APPEL DE LA FONCTION DE RECCUPERATION///
   useEffect(() => {
@@ -43,13 +39,8 @@ function AddComments (){
     getComment()  
   }   
   }, 
-  [])
-  //END/APPEL DE LA FONCTION DE RECCUPERATION/END//
-  //END/////////// FONCTION DE RECCUPERATION DES COMMENTAIRE DEPUIS L'API  ///////////END//
-
+  [watchForLike])
   
-  
-  ///////////// FONCTION D'AJOUT D'UN COMMENTAIRE  /////////////
   const [stateAddCommentForm, setStateAddCommentForm] = useState({
         userId : auth.userId,
         commentTxt : "",
@@ -125,151 +116,32 @@ function AddComments (){
 
     ///////////// FONCTION DE LIKE  /////////////
     
-    const [like, setLike] = useState()
-    const [dislike, setDislike] = useState()
-
-    const [likeActive, setLikeActive] = useState(false)
-    const [dislikeActive, setDisklikeActive] = useState(false)
-
-    const [commentLiked, setCommentLiked] = useState([]) 
-
-    console.log("filterCommentstate 1")
-        console.log(commentLiked)
-        console.log("filterCommentstate END")
-
-
-    // Y PENSER : POUR DEFINIR L'ETAT INITIAL ON DEVRA VERIFIER LA PRESENCE DE L'ID DANS LES TABLEAUX LIKE ET DISLIKE //
-    console.log("////likeActive/////")
-    console.log(likeActive)
-    console.log("////likeActive/END/")
-
-    const likeElement = (id, likes, dislikes, usersLiked, usersDisliked, userId, Txt ) => {
-
-      /*const addtostateLiked = { 
-        commentTxt : Txt,
-        _id : id, 
-        userId : userId,
-        likes : likes,
-      dislikes : dislikes,
-    usersLiked : usersLiked,
-  usersDisliked : usersDisliked}*/
-
-  
-
-      //console.log("ADDTOSTATELIKED")
-      //console.log(addtostateLiked)
-      //console.log("ADDTOSTATELIKED")
-
-      const isUserAlreadyLike = usersLiked.find( element => element === auth.userId);
-      const isUserAlreadyDislike = usersDisliked.find( disliked => disliked === auth.userId);
-
-      
-
-
-      
-
+       const likeElement = async ( id) => {
     
+        const data = {userId : auth.userId,
+        like : 1}    
 
-      console.log("FONCTION POUR LIKER !")
-      console.log("ID :")
-      console.log(id)
-      console.log("ID //END")
-
-      console.log("usersliked :")
-      console.log(usersLiked)
-      console.log("usersliked //END")
-
-      console.log("usersdisliked :")
-      console.log(usersDisliked)
-      console.log("usersliked //END")
-      
-      console.log("likes :")
-      console.log(likes)
-      console.log("likes //END")
-
-      console.log("dislikes :")
-      console.log(dislikes)
-      console.log("dislikes //END")
-
-      console.log("found like :")
-      console.log(isUserAlreadyLike)
-      console.log("found //END")
-
-      console.log("found dislike :")
-      console.log(isUserAlreadyDislike)
-      console.log("found //END")
-
-      
-
-      if (isUserAlreadyLike !== undefined) { 
-
-        console.log("L'utilisateur a déjà liké")
-        console.log("---> On retire le like") 
-
-       
-
- 
-       
-         
-       
-
-
-
-
-
-        
-
+        try { 
+          const response = await FuncLikeOrDislike(id, data);
+          console.log(response);
+          setWatchForLike( watchForLike+1)          
+         } catch(error) {
+           console.log(error)
+         }     
     }
 
-      else if (isUserAlreadyDislike !== undefined) { console.log("L'utilisateur a déjà disliké")
-      console.log("---> On retire le dislike ")
-      console.log("---> On ajoute le like ")
-      
-        
+    const dislikeElement = async (id) => {
 
+      const data = {userId : auth.userId,
+        like : -1}    
 
-
-     }
-
-      else { console.log("--->On ajoute le like")
-
-       
-      
-
-
-    }
-
-    }
-
-    const dislikeElement = (id, likes, dislikes, usersLiked, usersDisliked ) => {
-
-      const isUserAlreadyLike = usersLiked.find( element => element === auth.userId);
-      const isUserAlreadyDislike = usersDisliked.find( disliked => disliked === auth.userId);
-      
-
-      if (isUserAlreadyDislike !== undefined) { 
-        console.log("L'utilisateur a déjà disliké") 
-        console.log(" ---> Supprimer le dislike")
-        
-        
-        
-      console.log("found dislike :")
-      console.log(isUserAlreadyDislike)
-      console.log("found //END")
-
-
-    }
-
-      else if (isUserAlreadyLike !== undefined) { console.log("L'utilisateur a déjà liké") 
-      console.log("---> On retire le like ")
-      console.log("---> On ajoute le dislike ")
-    
-    
-    }
-
-      else ( console.log("---> On ajoute le dislike "))
-
-
+        try { 
+          const response = await FuncLikeOrDislike(id, data);
+          console.log(response);  
+          setWatchForLike( watchForLike-1 )          
+         } catch(error) {
+           console.log(error)
+         } 
     }
 
     //END/////////// FONCTION DE LIKE  ///////////END//
@@ -329,8 +201,6 @@ function AddComments (){
               dislikeFunction = {dislikeElement}
               />
             )
-
-
           })
           }
           
