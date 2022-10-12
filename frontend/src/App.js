@@ -8,6 +8,7 @@ import Navbar from './components/Navbar/Navbar';
 import LogOrSign from './components/LogOrSign/LogOrSign';
 import {Routes, Route} from "react-router-dom"
 import AuthContextProvider from './contexts/AuthContext';
+import NotFound from './components/NotFound/NotFound';
 
 
 
@@ -23,6 +24,8 @@ function App() {
       <Navbar />    
         <main>
           <Routes>
+            <Route path="*" element = {<NotFound/>} />
+            <Route path="/" element = {<Home/>} />
             <Route path="/logorsignup" element = {<LogOrSign/>} />
             <Route path="/signup" element = {<SignupMain/>} />
             <Route path="/login" element = {<LoginMain/>} />

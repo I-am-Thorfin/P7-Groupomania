@@ -11,6 +11,8 @@ function LoginMain(){
 
     const {auth, setAuth} = useContext(AuthContext);
     const navigate = useNavigate();
+
+    ///////////// FONCTION DE LOGIN  /////////////
     
 
     const [user, setUser] = useState ({
@@ -41,7 +43,7 @@ function LoginMain(){
         catch ({ response }) { console.log(response) }
         }
 
-        
+    //END/////////// FONCTION DE LOGIN ///////////END//    
 
     return (
         

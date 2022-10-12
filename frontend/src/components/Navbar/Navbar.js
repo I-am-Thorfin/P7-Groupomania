@@ -15,9 +15,10 @@ export default function Navbar() {
   
   const [toggleMenu, setToggleMenu] = useState (false);
   const [largeur, setLargeur] = useState (window.innerWidth);
-
   const {auth} = useContext(AuthContext);  
 
+
+  ///////////// FONCTION DE MODIFICATION DE LA NAVBAR EN FONCTION DE LA LARGEUR  /////////////
   const toggleNav = () => {
     setToggleMenu(!toggleMenu)
   }
@@ -34,6 +35,7 @@ export default function Navbar() {
     }
   }, []
   )
+  //END/////////// FONCTION DE MODIFICATION DE LA NAVBAR EN FONCTION DE LA LARGEUR  ///////////END//
  
 
   return (

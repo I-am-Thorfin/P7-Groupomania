@@ -33,6 +33,7 @@ function Comments (){
             .then(response => {  
                 setGetComment( response.data )          
              })  
+            .catch (error => console.log(error)) 
         }
         getComment()}
 

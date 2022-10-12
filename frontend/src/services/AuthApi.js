@@ -5,7 +5,6 @@ import { getItem, addItem, removeItem } from './LocaleStorage'
 
 
 
-
 export function hasAuthenticated() {
     const token = getItem('key_token');
     const result = token ? tokenIsValid(token) : false;

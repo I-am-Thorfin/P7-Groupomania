@@ -32,7 +32,7 @@ exports.createComment = (req, res, next) => {
     console.log(req.body)
 
     console.log("///////req.body.imageURL:// FROM COMMENT.JS///")
-    console.log(req.body.imageUrl)
+    console.log(req.imageUrl)
     
     const commentObject = req.body
     delete commentObject._id
@@ -118,35 +118,55 @@ exports.deleteComment = (req, res, next) => {
 
 exports.likeOrDislike = (req, res, next) => {
 
-    
-        if (req.body.like === 1) {
-            Comment.updateOne({ _id: req.params.id }, { $inc: { likes: req.body.like++ }, $push: { usersLiked: req.body.userId } })
-                .then((comment) => res.status(200).json({ message: 'Like ajouté !' }))
-                .catch(error => res.status(400).json({ error }))
-        } 
-        
-        else if (req.body.like === -1) {
-            Comment.updateOne({ _id: req.params.id }, { $inc: { dislikes: (req.body.like++) * -1 }, $push: { usersDisliked: req.body.userId } })
-                .then((comment) => res.status(200).json({ message: 'Dislike ajouté !' }))
-                .catch(error => res.status(400).json({ error }))
-        }
-        
-        else {
-            Comment.findOne({ _id: req.params.id })
-                .then(comment => {
-                    if (comment.usersLiked.includes(req.body.userId)) {
-                        Comment.updateOne({ _id: req.params.id }, { $pull: { usersLiked: req.body.userId }, $inc: { likes: -1 } })
+    Comment.findOne({ _id: req.params.id })
+    .then(comment => {
+
+
+    if (req.body.like === 1) {
+
+        if( comment.usersLiked.includes(req.body.userId)) {
+            Comment.updateOne({ _id: req.params.id }, { $pull: { usersLiked: req.body.userId }, $inc: { likes: -1 } })
                             .then((comment) => { res.status(200).json({ message: 'Like supprimé !' }) })
-                            .catch(error => res.status(400).json({ error }))
-                    } 
-                    else if (comment.usersDisliked.includes(req.body.userId)) {
-                        Comment.updateOne({ _id: req.params.id }, { $pull: { usersDisliked: req.body.userId }, $inc: { dislikes: -1 } })
-                            .then((comment) => { res.status(200).json({ message: 'Dislike supprimé !' }) })
-                            .catch(error => res.status(400).json({ error }))
-                    }
-                })
-                .catch(error => res.status(400).json({ error }))
+                            .catch(error => res.status(400).json({ error }))            
         }
+
+        else if (comment.usersDisliked.includes(req.body.userId)) {
+            Comment.updateOne({ _id: req.params.id }, { $pull: { usersDisliked: req.body.userId }, $inc: { dislikes: -1, likes: req.body.like++ }, $push: { usersLiked: req.body.userId }  })
+                .then((comment) => { res.status(200).json({ message: 'Dislike supprimé et like ajouté !' }) })
+                .catch(error => res.status(400).json({ error }))
+
+        }
+
+        else { Comment.updateOne({ _id: req.params.id }, { $inc: { likes: req.body.like++ }, $push: { usersLiked: req.body.userId } })
+        .then((comment) => res.status(200).json({ message: 'Like ajouté !' }))
+        .catch(error => res.status(400).json({ error })) }
+    }  
+    
+    else if (req.body.like === -1) { 
+        if( comment.usersDisliked.includes(req.body.userId)) {
+            Comment.updateOne({ _id: req.params.id }, { $pull: { usersDisliked: req.body.userId }, $inc: { dislikes: -1 } })
+                            .then((comment) => { res.status(200).json({ message: 'Dislike supprimé !' }) })
+                            .catch(error => res.status(400).json({ error }))         
+        }
+
+        else if ( comment.usersLiked.includes(req.body.userId) ) {
+            Comment.updateOne({ _id: req.params.id }, { $pull: { usersLiked: req.body.userId }, $inc: { likes: -1, dislikes: (req.body.like++)*-1}, $push: { usersDisliked: req.body.userId } })
+                            .then((comment) => { res.status(200).json({ message: 'Like supprimé et Dislike ajouté !' }) })
+                            .catch(error => res.status(400).json({ error }))
+        }
+        else ( Comment.updateOne({ _id: req.params.id }, { $inc: { dislikes: (req.body.like++) * -1 }, $push: { usersDisliked: req.body.userId } })
+        .then((comment) => res.status(200).json({ message: 'Dislike ajouté !' }))
+        .catch(error => res.status(400).json({ error })) )
+
+     }     
+        
+})
+.catch(error => res.status(400).json({ error }))
+
+
+
+    
+      
       
     
 
