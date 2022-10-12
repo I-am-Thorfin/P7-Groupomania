@@ -15,6 +15,16 @@ const {auth} = useContext(AuthContext);
 
     // PENSEZ A LA KEY DANS LES LISTES AVEC MAP()
 
+
+///  Vérification ///
+
+const isUserAlreadyLike = props.usersLiked.find(element => element == auth.userId )
+const isUserAlreadyDislike = props.usersDisliked.find(element => element == auth.userId )
+
+
+
+
+
     return (
 
         <div>
@@ -55,13 +65,33 @@ const {auth} = useContext(AuthContext);
        {props.txt}
     </div>
     <div className="base__likeordislike">
-        <div className="base__likeordislike--like">
-            
+
+        <div className=
+            {
+                (isUserAlreadyLike !== undefined  && (
+                    "base__likeordislike--like liked"
+                )) 
+                ||
+                (                        
+                    "base__likeordislike--like"   
+                ) 
+            }        
+        >           
             <p>{props.likes}</p>
             <i className="fas fa-thumbs-up" onClick={() => props.likeFunction(props.id, props.likes, props.dislikes, props.usersLiked, props.usersDisliked)} ></i>
             
         </div>
-        <div className="base__likeordislike--dislike">
+        <div className=
+            {
+                (isUserAlreadyDislike !== undefined  && (
+                    "base__likeordislike--like disliked"
+                )) 
+                ||
+                (                        
+                    "base__likeordislike--like"   
+                ) 
+            }
+        >
             
             <i className="fas fa-thumbs-down" onClick={() => props.dislikeFunction(props.id, props.likes, props.dislikes, props.usersLiked, props.usersDisliked)}></i>
             <p>{props.dislikes}</p>
@@ -74,6 +104,8 @@ const {auth} = useContext(AuthContext);
 
 
 </li>
+
+
 
         </div>
       

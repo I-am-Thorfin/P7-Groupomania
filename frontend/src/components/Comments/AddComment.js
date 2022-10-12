@@ -6,10 +6,8 @@ import Comments from './Comments';
 import axios from 'axios'
 import { getItem } from '../../services/LocaleStorage'
 
-
-
 function AddComments (){
-  
+
   const {auth, setAuth} = useContext(AuthContext);  
   const [ stateCommentsList, setStateCommentsList] = useState([])
   const [ watchForLike, setWatchForLike] = useState(1)
@@ -206,9 +204,6 @@ function AddComments (){
           
         </ul>
 </div>
-
 )
-
 }
-
 export default AddComments;

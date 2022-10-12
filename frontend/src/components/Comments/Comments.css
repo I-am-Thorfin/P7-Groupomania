@@ -89,6 +89,7 @@
     align-items: center;
 }
 
+
 .base__likeordislike--dislike {
     display: flex;
     justify-content: space-around;
@@ -104,4 +105,19 @@
     height: 20px;
     width: 100%;  
     border-radius: 0px 0px 10px 10px; 
+}
+
+
+.like-button, .dislike-button {
+	margin: 50px;
+	border-radius: 5px;
+}
+.liked {
+	color: green;
+    font-weight: 500;
+}
+
+.disliked {
+    color : red;
+    font-weight: 500;
 }
