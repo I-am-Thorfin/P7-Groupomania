@@ -138,7 +138,10 @@ export function createNewComment(Statedecreationdecommentaire) {
     
     .then(response => console.log(response.data)
         )
-    .then( console.log("Commentaire posté"));
+    .then( console.log("Commentaire posté")
+    )
+    .catch(error => console.log(error));
+
 }
 
 

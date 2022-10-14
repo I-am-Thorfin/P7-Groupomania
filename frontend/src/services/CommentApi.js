@@ -5,19 +5,23 @@ import jwtDecode from 'jwt-decode'
 
 
 
-export function createNewComment(Statedecreationdecommentaire) {
+export function createNewComment(ourForm) {
     const token = getItem('key_token');
     
     const config = {
-        headers : { Authorization: `Bearer ${token}`}
+        headers : { Authorization: `Bearer ${token}`,
+        "Content-Type" : "multipart/form-data; boundary=something"
+        }
     };
 
     return axios
-    .post(`http://localhost:8000/api/comments`, Statedecreationdecommentaire, config)
+    .post(`http://localhost:8000/api/comments`, ourForm, config)
     
     .then(response => console.log(response.data)
         )
-    .then( console.log("Commentaire posté"));
+    .then( window.location.reload()  ) 
+
+    .catch( error => console.log(error));
 }
 
 
@@ -33,5 +37,7 @@ export function FuncLikeOrDislike(commentId, data) {
     
     .then(response => console.log(response.data)
         )
-    .then( console.log("Like or Dislike send ! "));
+    .then( console.log("Like or Dislike send ! "))
+    
+    .catch ( error => console.log(error));
 }

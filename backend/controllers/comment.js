@@ -24,27 +24,47 @@ exports.getOneComment = (req, res, next) => {
 exports.createComment = (req, res, next) => {
     console.log("///////req.body/////")
     console.log(req.body)
+    console.log("////////////")
 
-    // Ce qui venait du cours sur le backend : 
-    //const commentObject = JSON.parse(req.body.comment)
+    console.log("///////req.body.comment ( Parse Jason )/////")
+    console.log(JSON.parse(req.body.comment))
+    console.log("////////////")
 
-    console.log("///////req.body/////")
-    console.log(req.body)
-
-    console.log("///////req.body.imageURL:// FROM COMMENT.JS///")
-    console.log(req.imageUrl)
+    console.log("///////req.file")
+    console.log(req.file)
+    console.log("////////////")
     
-    const commentObject = req.body
+    const commentObject = JSON.parse(req.body.comment)
     delete commentObject._id
-    const comment = new Comment({
+
+    // --------> SI : Le Front nous envoie une image :
+
+    if ( req.file !== undefined) { const comment = new Comment({
         ...commentObject,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.File}`
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
-    console.log("Comment",req.body) 
+   // console.log("Comment",req.body) 
     comment.save()      
         .then(() => res.status(201).json({ message: 'Commentaire !' }))
-        .catch(error => res.status(400).json({ error }))
+        .catch(error => res.status(400).json({ error }))  }
+    
+    // --------> SI : Le Front ne nous envoie pas d'image :    
+
+    else { const comment = new Comment({
+        ...commentObject,
+        imageUrl: ``
+    });
+   // console.log("Comment",req.body) 
+    comment.save()      
+        .then(() => res.status(201).json({ message: 'Commentaire !' }))
+        .catch(error => res.status(400).json({ error }))  }
+
+
+
+    
 };
+
+
 
 
 
@@ -71,8 +91,10 @@ exports.modifyComment = (req, res, next) => {
             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         } : { ...req.body }
     Comment.updateOne({ _id: req.params.id }, { ...commentObject, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Commentaire modifiée !' }))
-        .catch(error => res.status(400).json({ error }))
+    
+    
+    .then(() => res.status(200).json({ message: 'Commentaire modifiée !' }))
+    .catch(error => res.status(400).json({ error }))
         }
      });
 };

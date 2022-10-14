@@ -22,100 +22,74 @@ const isUserAlreadyLike = props.usersLiked.find(element => element == auth.userI
 const isUserAlreadyDislike = props.usersDisliked.find(element => element == auth.userId )
 
 
-
+    
 
 
     return (
 
-        <div>
+        <>
 
-<li className="comment__container">         
-
-
-<div className="comment__profil">
-    <img src={avatar} className="comment__profil--avatar" alt="logo Groupomania" />
-    <div className="comment__profil--name">
-     {props.firstname} {props.lastname} a écrit :
-
-</div>
-
-
-    <div className ="comment__profil--button">  
-        
-        {
-            ( ((props.userId == auth.userId) || (auth.isAdmin === true ) ) && (
-                <>
-                  <button onClick={() => props.delFunction(props.id)}><i className="fas fa-trash-alt"></i></button>
-                  <button><i className="fas fa-cogs"></i></button>
-                </>
-            )) 
-             
-        } 
-        
-    </div>
-    
-</div>
-<div className="comment__intro"></div>
-    <div className="comment__base">   
-        <img className="comment__base--img"
-           src={photo}
-           alt="Publication de Prénom et Nom"                     
-           />    
-        <div className="comment__base--txt">
-       {props.txt}
-    </div>
-    <div className="base__likeordislike">
-
-        <div className=
-            {
-                (isUserAlreadyLike !== undefined  && (
-                    "base__likeordislike--like liked"
-                )) 
-                ||
-                (                        
-                    "base__likeordislike--like"   
-                ) 
-            }        
-        >           
-            <p>{props.likes}</p>
-            <i className="fas fa-thumbs-up" onClick={() => props.likeFunction(props.id, props.likes, props.dislikes, props.usersLiked, props.usersDisliked)} ></i>
-            
-        </div>
-        <div className=
-            {
-                (isUserAlreadyDislike !== undefined  && (
-                    "base__likeordislike--like disliked"
-                )) 
-                ||
-                (                        
-                    "base__likeordislike--like"   
-                ) 
-            }
-        >
-            
-            <i className="fas fa-thumbs-down" onClick={() => props.dislikeFunction(props.id, props.likes, props.dislikes, props.usersLiked, props.usersDisliked)}></i>
-            <p>{props.dislikes}</p>
-        </div>
-    </div>
-    <div className="comment__base--end">                   
-    </div>
-    
-</div>
-
-
-</li>
-
-
-
-        </div>
-      
-    
-    
-     
-    
-    
-        )
-
+            <li className="comment__container"> 
+                <div className="comment__profil">
+                    <img src={avatar} className="comment__profil--avatar" alt="logo Groupomania" />
+                    <div className="comment__profil--name">
+                        {props.firstname} {props.lastname} a écrit :
+                    </div>
+                    <div className ="comment__profil--button">  
+                        {
+                            ( ((props.userId == auth.userId) || (auth.isAdmin === true ) ) && (
+                                <>
+                                <button onClick={() => props.delFunction(props.id)}><i className="fas fa-trash-alt"></i></button>
+                                <button><i className="fas fa-cogs"></i></button>
+                                </>
+                            )) 
+                        } 
+                    </div>
+                </div>
+                <div className="comment__intro"></div>
+                <div className="comment__base">   
+                    <img className="comment__base--img"
+                    src={photo}
+                    alt="Publication de Prénom et Nom"                     
+                    />    
+                    <div className="comment__base--txt">
+                        {props.txt}
+                    </div>
+                    <div className="base__likeordislike">
+                        <div className=
+                        {
+                            (isUserAlreadyLike !== undefined  && (
+                                "base__likeordislike--like liked"
+                            )) 
+                            ||
+                            (                        
+                                "base__likeordislike--like"   
+                            ) 
+                        }        
+                        >           
+                            <p>{props.likes}</p>
+                            <i className="fas fa-thumbs-up" onClick={() => props.likeFunction(props.id, props.likes, props.dislikes, props.usersLiked, props.usersDisliked)} ></i>
+                        </div>
+                    <div className=
+                        {
+                            (isUserAlreadyDislike !== undefined  && (
+                                "base__likeordislike--like disliked"
+                            )) 
+                            ||
+                            (                        
+                                "base__likeordislike--like"   
+                            ) 
+                        }
+                        >    
+                            <i className="fas fa-thumbs-down" onClick={() => props.dislikeFunction(props.id, props.likes, props.dislikes, props.usersLiked, props.usersDisliked)}></i>
+                        <   p>{props.dislikes}</p>
+                        </div>
+                        </div>
+                    <div className="comment__base--end"></div>
+                </div>
+            </li>
+        </>
+    )
 }
 
 export default Comments;

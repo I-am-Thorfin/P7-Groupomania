@@ -115,11 +115,11 @@ font-size: 24px;
         content:"";
         background: linear-gradient(to right, #FD2D01
         , #FFD7D7);
-        height: 10px;
+        height: 5px;
         width: 100%;
         z-index:10000;
         position: absolute;
-        top:180px;    
+        top:120px;    
     }
 
     .nav__list {

@@ -1,7 +1,9 @@
-import './Addcomments.css'
+import './AddComment.css'
 import { useState, useContext } from 'react';
 import {AuthContext} from "../../contexts/AuthContext"
 import { createNewComment } from '../../services/AuthApi'
+
+
 
 
 function AddComments (){
@@ -78,7 +80,7 @@ function AddComments (){
                     <label htmlFor="imageUrl">
                     <i className="fas fa-images"></i> Une photo à nous partager ?
                     </label>
-                    <input type='file' id="imageUrl" name="imageUrl" accept="image/png, image/jpeg" 
+                    <input type='file' id="image" name="image" accept="image/png, image/jpeg" 
                     onChange={fileHandleChange} > 
                     </input>
                     
