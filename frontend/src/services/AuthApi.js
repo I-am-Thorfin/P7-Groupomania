@@ -144,3 +144,14 @@ export function createNewComment(Statedecreationdecommentaire) {
 
 
 
+
+export function checkStorage (setContext) {
+    if (localStorage.getItem("key_token") !== null) {
+
+        console.log("Il y a quelque chose dans le local storage. Tout va bien.")  
+        
+    }
+
+    else { logout()
+        setContext ({isLogin : false}) }    
+}

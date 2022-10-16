@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext} from "../../contexts/AuthContext"
+import { checkStorage } from '../../services/AuthApi';
 import { Navigate, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { getItem } from '../../services/LocaleStorage'
 import './MyProfilMain.css'
+import { logout } from "../../services/AuthApi"
 
 
 
@@ -14,6 +16,9 @@ function MyprofilMain (){
 
     const {auth, setAuth} = useContext(AuthContext);
     const navigate = useNavigate();
+
+    // On s'assure de la connexion en arrivant ici :
+    checkStorage(setAuth)
 
     ///////////// FONCTION DE RECCUPERATION D'UN USER EN FONCTION DE L'ID DANS L'URL  /////////////
 
@@ -57,9 +62,10 @@ function MyprofilMain (){
         
     }, [])
 
+
     console.log(getUser)
 
-  const profilUser = [getUser]
+
     
 
   //END/////////// FONCTION DE RECCUPERATION D'UN USER EN FONCTION DE L'ID DANS L'URL  ///////////END//
@@ -84,14 +90,12 @@ function MyprofilMain (){
     return axios
     .delete(`http://localhost:8000/api/auth/${profilParamsId}`, config)
     .then(response => {  console.log(response)
-        if (auth.userId === profilParamsId) { console.log("L'utilisateur a supprimé son profil" ) } 
-
-                 
+        if (auth.userId === profilParamsId) { logout()
+            navigate("/home")
+         } 
+        else { navigate("/home")  }                
      }) 
     .catch (error => { console.log(error)}) 
-  
-
-
 }
 
 
@@ -100,7 +104,7 @@ function MyprofilMain (){
         <div className="mainprofil__container">
             <div className='profil__container--titre'>
                 {
-                    (auth.userId == getUser._id  && (
+                    (auth.userId === getUser._id  && (
                         <>
                             <p>Bienvenue sur votre profil {getUser.firstname}</p>
                         </>
@@ -125,7 +129,7 @@ function MyprofilMain (){
                 </div>
 
                 {
-            ( ((getUser._id == auth.userId) || (auth.isAdmin === true ) ) && (
+            ( ((getUser._id === auth.userId) || (auth.isAdmin === true ) ) && (
                 <>
                   <button onClick={delUserFunction} > supprimer </button>
                 </>

@@ -78,6 +78,7 @@ exports.modifyComment = (req, res, next) => {
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET'); 
         const userId = decodedToken.userId;
+        const isAdmin = decodedToken.isAdmin;
         console.log(comment.userId)
         
 
@@ -89,7 +90,7 @@ exports.modifyComment = (req, res, next) => {
         console.log(JSON.parse(req.body.comment))
         console.log("////////////")
 
-        if (comment.userId !== userId) {
+        if ( (comment.userId !== userId) && (isAdmin === false) ) {
             res.status(403).json({
                 message: 'Vous ne pouvez modifier ce commentaire'
             });

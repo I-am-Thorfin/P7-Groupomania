@@ -13,8 +13,6 @@ router.put('/:id', auth, multer, commentCtrl.modifyComment);
 router.delete('/:id', auth, commentCtrl.deleteComment);
 router.post('/:id/like', auth, commentCtrl.likeOrDislike)
 
-
-
 module.exports = router
 
 

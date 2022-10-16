@@ -2,6 +2,7 @@ import './Home.css'
 import { useState, useContext, useEffect, isValidElement } from 'react';
 import {AuthContext} from "../../contexts/AuthContext"
 import { createNewComment, FuncLikeOrDislike, getAllComments } from '../../services/CommentApi'
+import { checkStorage } from '../../services/AuthApi';
 import Comments from '../Comments/Comments';
 import AddComment from '../Comments/AddComment';
 import axios from 'axios'
@@ -13,6 +14,9 @@ function AddComments (){
   const {auth, setAuth} = useContext(AuthContext);  
   const [ stateCommentsList, setStateCommentsList] = useState([])
   const [ watchForLike, setWatchForLike] = useState(1)
+
+  // On s'assure de la connexion en arrivant ici :
+  checkStorage(setAuth)
 
   ///////////// FONCTION DE RECCUPERATION DES COMMENTAIRE DEPUIS L'API  /////////////
   
@@ -131,6 +135,10 @@ function AddComments (){
     console.log("///// stateCommentsList /////")
   console.log(stateCommentsList)
   console.log("///// stateCommentsList /////")
+  
+  console.log("auth")
+  console.log(auth)
+  console.log("auth")
   
   return (
     <>  
