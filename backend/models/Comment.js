@@ -6,6 +6,7 @@ const commentSchema = mongoose.Schema({
     userlastname : { type: String, require : true},
     commentTxt: {type: String, required: true},
     imageUrl: {type: String, required: false},
+    isImage : {type: Boolean, required: false, default: false },
     likes: {type: Number, required: false, default: 0 },
     dislikes: {type: Number, required: false, default: 0 },
     usersLiked: {type: [String], required: false},

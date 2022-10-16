@@ -14,7 +14,8 @@ function AddComments (){
     userId : auth.userId,
     commentTxt : "",
     userlastname : auth.lastname,
-    userfirstname :auth.firstname
+    userfirstname :auth.firstname,
+    isImage : false
 });
 
 const [stateAddImage, setStateAddImage] = useState()
@@ -24,12 +25,7 @@ console.log(stateAddImage)
 console.log("stateAddImage !")
 
 console.log(stateAddCommentForm)
-
-
- 
-
-
-   
+  
 
     const handleChange = (event) => {
       setStateAddCommentForm({
@@ -37,32 +33,35 @@ console.log(stateAddCommentForm)
         [event.target.id]: event.target.value
 
       });
-
-     
-      formData.append (  event.target.name, event.target.value  )
-          
+           
     } 
-
     
-
-
     const fileHandleChange = (event) => {
-
-    
-      formData.append("image", event.target.files[0]);
-      
-    }
-   
-       
+        setStateAddImage(event.target.files[0])
+    }      
     
       const handleSubmit = async event => {      
         event.preventDefault();   
 
         formData.append (  "comment", JSON.stringify(stateAddCommentForm)  )
+        formData.append("image", stateAddImage);
 
+        console.log("formData.getKEY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        for (var key of formData.keys()) {
+          console.log(key);
+       }
+       console.log("formData.getAll()")
+       console.log(formData.getAll("image"))
+       console.log("formData.getAll()")
+       console.log("formData.getAll()")
+        console.log(formData.getAll("comment"))
         console.log("formData.getAll()")
-        console.log(formData.getAll("image"))
-        console.log("formData.getAll()")
+        console.log("formData.getKEY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        
+
+        
+
+        
 
         if (stateAddImage !== undefined ) {
           console.log("il y a une image à envoyer")
@@ -100,11 +99,11 @@ console.log(stateAddCommentForm)
               <label htmlFor="commentTxt">
                  <i className="far fa-comment fa-2x"></i>
               </label>
-              <input type='text' id="commentTxt" name="commentTxt" placeholder="Ecrivez nous ici !"
+              <textarea className="addcomment__form--inputcommenttxt" type='text' id="commentTxt" name="commentTxt" placeholder="Ecrivez nous ici !"
               onChange={handleChange}> 
-              </input>
+              </textarea>
               <label htmlFor="image">
-              <i className="fas fa-images"></i> Une photo à nous partager ?
+                <i className="fas fa-images"></i> Une photo à nous partager ?
               </label>
               <input type='file' id="image" name="image" accept="image/png, image/jpeg" 
               onChange={fileHandleChange} > 

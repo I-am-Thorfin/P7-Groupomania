@@ -10,7 +10,7 @@ import {AuthContext} from "../../contexts/AuthContext"
 function SignupMain(){
     const navigate = useNavigate();
     const {auth, setAuth} = useContext(AuthContext);
-    
+    const formData = new FormData();
 
     const [stateSignupForm, setstateSignupForm] = useState({
         lastname :"",
@@ -25,9 +25,14 @@ function SignupMain(){
         console.log(name, value)
         setstateSignupForm({...stateSignupForm, [name]: value})
     } 
+    
 
-    const handleSubmit = async event => {      
+
+    const handleSubmit = async event => {    
        event.preventDefault();          
+
+       
+
 
      try { 
         const response = await createNewUser(stateSignupForm);

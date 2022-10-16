@@ -8,6 +8,7 @@ import './MyProfilMain.css'
 
 
 
+
 function MyprofilMain (){
     
 
@@ -21,28 +22,30 @@ function MyprofilMain (){
     const [getUser, setGetUser] = useState ( {
         
     }
-    );
-    
-    
-
-    
+    );    
 
     useEffect(() => {
 
         if (auth.isLogin ===false) { console.log("is login false")}
 
         else {
+            
+
             function getOneUser() {
                 const token = getItem('key_token');
                
                 const config = {
                     headers : { Authorization: `Bearer ${token}`}
                 };
-            
                 return axios
                 .get(`http://localhost:8000/api/auth/${profilParamsId}`, config)
                 .then(response => {  
-                    setGetUser( response.data )          
+                    console.log("response.data")
+                    console.log(response.data)
+                    console.log("response.data")
+                    if ( response.data == null) { navigate("/userunfound")}
+                    else {setGetUser( response.data ) }
+                             
                  }) 
                 .catch (error => { console.log(error)
                     navigate("/userunfound")
@@ -54,9 +57,7 @@ function MyprofilMain (){
         
     }, [])
 
-  console.log(getUser)
-
-
+    console.log(getUser)
 
   const profilUser = [getUser]
     

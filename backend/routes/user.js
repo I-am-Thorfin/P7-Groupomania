@@ -5,7 +5,7 @@ const maxTry = require("../middleware/limiter")
 const checkPassword = require('../middleware/checkpassword');
 const auth = require('../middleware/auth');
 
-
+router.get('/', auth, userCtrl.getAllUsers);
 router.get('/:id', auth, userCtrl.getOneUser);
 router.post('/signup', checkPassword, userCtrl.signup); 
 router.post('/login', maxTry.limiter, userCtrl.login);

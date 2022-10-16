@@ -71,7 +71,7 @@ export default function Navbar() {
               }             
             </ul>
           )}  
-            <button onClick={toggleNav} className="navbtn"><i className="fas fa-bars"></i></button>
+            <button onClick={toggleNav} className="navbtn" aria-label='Afficher ou faire disparaître la barre de tâche'><i className="fas fa-bars"></i></button>
         </div>
     </nav>
   )

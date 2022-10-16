@@ -3,6 +3,38 @@ import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 
 
+export function getAllComments(setState) {
+    const token = getItem('key_token');
+   
+    const config = {
+        headers : { Authorization: `Bearer ${token}`}
+    };
+
+    return axios
+    .get(`http://localhost:8000/api/comments`, config)
+    .then(response => {  
+      setState( response.data )          
+     }) 
+     .catch (error => (console.log(error))) 
+  }
+
+  export function modifyOneComment(commentId, formdata) {
+
+    const token = getItem('key_token');
+   
+    const config = {
+        headers : { Authorization: `Bearer ${token}`}
+    };
+
+    return axios
+    .put(`http://localhost:8000/api/comments/${commentId}`, formdata ,config)
+    .then(response => {  console.log( response.data ) 
+                 
+     }) 
+    .then( window.location.reload()  ) 
+    .catch (error => (console.log(error))) 
+
+  }
 
 
 export function createNewComment(ourForm) {

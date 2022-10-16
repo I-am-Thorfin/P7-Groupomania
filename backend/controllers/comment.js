@@ -41,7 +41,8 @@ exports.createComment = (req, res, next) => {
 
     if ( req.file !== undefined) { const comment = new Comment({
         ...commentObject,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        isImage : true
     });
    // console.log("Comment",req.body) 
     comment.save()      
@@ -78,6 +79,15 @@ exports.modifyComment = (req, res, next) => {
         const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET'); 
         const userId = decodedToken.userId;
         console.log(comment.userId)
+        
+
+        console.log("///////req.file")
+        console.log(req.file)
+        console.log("////////////")
+
+        console.log("///////req.body.comment ( Parse Json )/////")
+        console.log(JSON.parse(req.body.comment))
+        console.log("////////////")
 
         if (comment.userId !== userId) {
             res.status(403).json({
@@ -85,11 +95,14 @@ exports.modifyComment = (req, res, next) => {
             });
         }
         else {
+            const modifyObject = JSON.parse(req.body.comment)
             const commentObject = req.file ?
         {
-            ...JSON.parse(req.body.comment),
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        } : { ...req.body }
+            ...modifyObject,
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+            
+            
+        } : { ...modifyObject }
     Comment.updateOne({ _id: req.params.id }, { ...commentObject, _id: req.params.id })
     
     

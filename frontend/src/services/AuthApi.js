@@ -46,23 +46,6 @@ export function createNewUser(credentials) {
     .then( console.log("Compte Créé"))
 }
 
-export function getOneUser(userid) {
-    const token = getItem('key_token');
-   
-    const config = {
-        headers : { Authorization: `Bearer ${token}`}
-    };
-
-    return axios
-    .get(`http://localhost:8000/api/auth/${userid}`, config)
-    .then(response => { const getUserID = response.data
-        console.log(getUserID)
-        return getUserID
-     })
-    .then( console.log("check user")
-    
-    )
-}
 
 export function controlAdmin() {
     const token = getItem('key_token');
@@ -123,6 +106,21 @@ export function userFirstNameFromToken () {
     return ""  
 }
 
+
+export function getAllUsers(setState) {
+    const token = getItem('key_token');
+   
+    const config = {
+        headers : { Authorization: `Bearer ${token}`}
+    };
+
+    return axios
+    .get(`http://localhost:8000/api/auth`, config)
+    .then(response => {  
+      setState( response.data )          
+     }) 
+     .catch (error => (console.log(error))) 
+  }
 
 
 

@@ -55,7 +55,7 @@ exports.login = (req, res, next) => {
                             { userId: user._id, isAdmin: user.isadmin, firstname : user.firstname, lastname: user.lastname },
                             `${process.env.AUTH_TOKEN_JWT}`,
                             { expiresIn: '24h' }
-                            
+   
                         )
                     });
                 })
@@ -64,9 +64,20 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
  };
 
+
+////* OBTENTION DE TOUS LES USER *////
+
+exports.getAllUsers = (req, res, next) => {
+    User.find()
+        .then(users => res.status(200).json(users))
+        .catch(error => res.status(400).json({ error: error }))   
+};
+
 // FONCTION D'OBTENTION D'UN USER EN FONCTION DE SON ID ( ROUTE GET )
+
 exports.getOneUser = (req, res, next) => {
     User.findOne({ _id: req.params.id })
+    
         .then(user => res.status(200).json(user))
         .catch(error => res.status(404).json({ error: error }))          
 };

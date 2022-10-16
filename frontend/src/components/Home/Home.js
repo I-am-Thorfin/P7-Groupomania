@@ -1,7 +1,7 @@
 import './Home.css'
 import { useState, useContext, useEffect, isValidElement } from 'react';
 import {AuthContext} from "../../contexts/AuthContext"
-import { createNewComment, FuncLikeOrDislike } from '../../services/CommentApi'
+import { createNewComment, FuncLikeOrDislike, getAllComments } from '../../services/CommentApi'
 import Comments from '../Comments/Comments';
 import AddComment from '../Comments/AddComment';
 import axios from 'axios'
@@ -16,27 +16,12 @@ function AddComments (){
 
   ///////////// FONCTION DE RECCUPERATION DES COMMENTAIRE DEPUIS L'API  /////////////
   
-  function getComment() {
-    const token = getItem('key_token');
-   
-    const config = {
-        headers : { Authorization: `Bearer ${token}`}
-    };
-
-    return axios
-    .get(`http://localhost:8000/api/comments`, config)
-    .then(response => {  
-      setStateCommentsList( response.data )          
-     }) 
-     .catch (error => (console.log(error))) 
-  }
-
   ///APPEL DE LA FONCTION DE RECCUPERATION///
   useEffect(() => {
 
     if (auth.isLogin ===false) { console.log("is login false")}
     else {
-    getComment()  
+      getAllComments(setStateCommentsList) 
   }   
   }, 
   [watchForLike])
@@ -77,8 +62,6 @@ function AddComments (){
        } 
     //END/////////// FONCTION D'AJOUT D'UN COMMENTAIRE  ///////////END//     
 
-
-
     ///////////// FONCTION DE SUPPRESSION D'UN COMMENTAIRE :   /////////////
     
     const deleteElement = id => {
@@ -113,7 +96,6 @@ function AddComments (){
 
     }
     //END/////////// FONCTION DE SUPPRESSION D'UN COMMENTAIRE :   ///////////END//
-
     ///////////// FONCTION DE LIKE  /////////////
     
        const likeElement = async ( id) => {
@@ -165,6 +147,8 @@ function AddComments (){
               < Comments
               id= {comment._id} // id devient notre référence pour l'ID du commentaire
               userId = {comment.userId} 
+              imageUrl= {comment.imageUrl}
+              isImage = {comment.isImage}
               key={comment._id}  
               txt = {comment.commentTxt} 
               firstname = {comment.userfirstname}
