@@ -8,9 +8,9 @@ import { getItem, addItem, removeItem } from './LocaleStorage'
 export function hasAuthenticated() {
     const token = getItem('key_token');
     const result = token ? tokenIsValid(token) : false;
-    console.log ("//result from hasAthenticated //")
-    console.log (result)
-    console.log ("//result from hasAthenticated END//")
+   // console.log ("//result from hasAthenticated //")
+   // console.log (result)
+   // console.log ("//result from hasAthenticated END//")
     return result;    
 }
 
@@ -50,9 +50,11 @@ export function createNewUser(credentials) {
 export function controlAdmin() {
     const token = getItem('key_token');
     const result = token ? tokenIsAdmin(token) : false;
+    /*
     console.log ("//result from ControlAdmin//")
     console.log (result)
     console.log ("//result from ControlAdmin END //")
+    */
     return result;   
 }
 
@@ -71,9 +73,11 @@ export function userIdFromToken () {
     if (localStorage.getItem("key_token") !== null) {
     const token = getItem('key_token');
     const { userId } = jwtDecode(token)
+   /*
     console.log ("//result from userIdfromtoken//")
     console.log(userId)
-    console.log ("//result from userIdfromtoken END //")
+    console.log ("//result from userIdfromtoken END //") 
+    */
     return userId   
     }
     return ""  
@@ -85,9 +89,11 @@ export function userLastNameFromToken () {
     if (localStorage.getItem("key_token") !== null) {
     const token = getItem('key_token');
     const { lastname } = jwtDecode(token)
+    /*
     console.log ("//result from userlastnamefromtoken//")
     console.log(lastname)
     console.log ("//result from userlastnamefromtoken END //")
+    */
     return lastname   
     }
     return ""  
@@ -98,9 +104,11 @@ export function userFirstNameFromToken () {
     if (localStorage.getItem("key_token") !== null) {
     const token = getItem('key_token');
     const { firstname } = jwtDecode(token)
+    /*
     console.log ("//result from userfirstnamefromtoken//")
     console.log(firstname)
     console.log ("//result from userfirstnamefromtoken END //")
+    */
     return firstname   
     }
     return ""  
@@ -148,10 +156,29 @@ export function createNewComment(Statedecreationdecommentaire) {
 export function checkStorage (setContext) {
     if (localStorage.getItem("key_token") !== null) {
 
-        console.log("Il y a quelque chose dans le local storage. Tout va bien.")  
+    console.log("Il y a quelque chose dans le local storage. Tout va bien.")  
         
     }
 
     else { logout()
         setContext ({isLogin : false}) }    
 }
+
+
+export function modifyOneUser(commentId, formdata) {
+
+    const token = getItem('key_token');
+   
+    const config = {
+        headers : { Authorization: `Bearer ${token}`}
+    };
+
+    return axios
+    .put(`http://localhost:8000/api/auth/${commentId}`, formdata ,config)
+    .then(response => {  console.log( response.data ) 
+                 
+     })
+    .then( window.location.reload()  )  
+    .catch (error => (console.log(error))) 
+
+  }

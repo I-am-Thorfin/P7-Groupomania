@@ -1,6 +1,6 @@
 .comment__container {
     width: 50%;
-    max-width: 700px;
+    max-width: 550px;
     min-width: 340px;
     border-radius: 15px;
     box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.4);
@@ -65,6 +65,18 @@
     font-weight: 600;
     margin-left: 10%;
 }
+
+.comment__profil--name a:visited {
+    color : #FD2D01;
+  }
+.comment__profil--name a {
+    color : #FD2D01;
+  }  
+  .comment__profil--name a:hover {
+    text-decoration: underline;
+  } 
+
+
 .comment__base--img {
     max-height: 250px;
     object-fit: cover;
@@ -147,6 +159,7 @@
 .modal__body{
     background: #FFD7D7;
     position: absolute;
+    max-width: 550px;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -198,6 +211,7 @@
     justify-content: center;
     font-size: 16px;
     transition-duration: 0.4s;
+    margin-top: 10px;
 
 }
 .modal__cancel:hover { 
@@ -214,6 +228,7 @@
     margin-left:10px;
     margin-right:10px;
     margin-bottom: 15px;
+    margin-top: 10px;
     padding-left: 5px;
     padding-right: 5px;
     color: white;
@@ -228,5 +243,30 @@
 .modal__delete:hover {
     background-color:#ff522f;
     box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.4);
-
 } 
+
+.modal__confirmedition { 
+    background-color:#4E5166;
+    min-width: 100px;
+    height: 30px;
+    border: #FFD7D7;
+    margin-left:10px;
+    margin-right:10px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: white;
+    box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+.modal__confirmedition:hover {
+    background-color:#555a80;
+    box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.4);
+} 
+

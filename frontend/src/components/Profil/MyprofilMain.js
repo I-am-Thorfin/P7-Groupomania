@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { getItem } from '../../services/LocaleStorage'
 import './MyProfilMain.css'
-import { logout } from "../../services/AuthApi"
+import { logout, modifyOneUser } from "../../services/AuthApi"
 
 
 
@@ -72,10 +72,6 @@ function MyprofilMain (){
 
 
   ///////////// FONCTION DE SUPPRESSION DU COMPTE  /////////////
-
-
-
-  //END/////////// FONCTION DE SUPPRESSION DU COMPTE  ///////////END//
   
 
   const delUserFunction = (event) => {
@@ -97,6 +93,63 @@ function MyprofilMain (){
      }) 
     .catch (error => { console.log(error)}) 
 }
+
+//END/////////// FONCTION DE SUPPRESSION DU COMPTE  ///////////END//
+
+/////////// EDITION DU COMPTE //////////////
+
+const formDataEdition = new FormData();
+const [userModification, setUserModifications] = useState({})
+const [userImageModification, setUserImageModifications] = useState()
+
+/// MODALE D'EDITION ///
+
+const [modalModify, setModalModify] = useState(false)
+
+const toggleModalModify = () => {
+    setModalModify(!modalModify)
+}
+
+////fonction d'édition////
+const handleChange =  event => {      
+    setUserModifications({
+        ...userModification,
+        [event.target.name]: event.target.value
+      });
+}  
+
+console.log("userModification")
+console.log(userModification)
+console.log("userModification")
+
+const fileHandleChange =  event => {      
+    setUserImageModifications(event.target.files[0])
+} 
+
+console.log("userImageModification")
+console.log(userImageModification)
+console.log("userImageModification")
+
+
+
+const submitUserModify = async event => { 
+event.preventDefault(); 
+
+formDataEdition.append ("user", JSON.stringify(userModification)  )
+formDataEdition.append("image", userImageModification); 
+
+    console.log("formDataEdition.getAll()")
+    console.log(formDataEdition.getAll("image"))
+    console.log("formDataEdition.getAll()")
+    console.log("formDataEdition.getAll()")
+    console.log(formDataEdition.getAll("user"))
+    console.log("formDataEdition.getAll()")
+    console.log("formDataEdition.getKEY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+    modifyOneUser(auth.userId, formDataEdition)
+}  
+
+
 
 
     return (
@@ -120,22 +173,65 @@ function MyprofilMain (){
             <div className='profil__style'></div>
 
                 <div className="profil__info">
+
+                    <img src={getUser.avatar} className="profil__info--avatar" alt="logo Groupomania" />
+                    <div className='profil__info--line'></div>
                     <div>
                         <p>Nom : </p> {getUser.lastname}
                     </div>
                     <div>
                         <p>Prénom : </p> {getUser.firstname}
                     </div>
+                    <div className='profil__info--line'></div>
                 </div>
-
                 {
             ( ((getUser._id === auth.userId) || (auth.isAdmin === true ) ) && (
-                <>
-                  <button onClick={delUserFunction} > supprimer </button>
-                </>
+                <div className='profil__button'>
+                  <button className="profil__button--delete" onClick={delUserFunction} > supprimer </button>
+                  <button className="profil__button--edit" onClick={toggleModalModify} > Editer </button>
+                </div>
             )) 
              
-        }     
+        } 
+
+
+        { modalModify &&
+            <div className="modal__overlay">
+                        <div className="modal__body">
+                            <div className="modal__title">
+                                <h2> Modifier le profil </h2>
+                            </div>
+                            
+                            <div className="modal__style"></div>
+                            <form className ="mainprofilmodal__form" onSubmit={submitUserModify}>
+                                <label htmlFor="lastname">
+                                    Nom :
+                                </label>
+                                <input type='text' id="lastname" name="lastname" placeholder={getUser.lastname}
+                                onChange={handleChange}> 
+                                </input>
+                                <label htmlFor="firstname">
+                                    Prenom :
+                                </label>
+                                <input type='text' id="firstname" name="firstname" placeholder={getUser.firstname}
+                                onChange={handleChange}> 
+                                </input>
+                                <label htmlFor="image">
+                                <i className="fas fa-images"></i> Voulez-vous modifier votre photo de profil ?
+                                </label>
+                                <input type='file' id="image" name="image" accept="image/png, image/jpeg" 
+                                onChange={fileHandleChange} > 
+                                </input>
+                                
+                                <div className='profilmodal__button'>
+                                    <div className="modal__cancel" onClick={toggleModalModify}>Annuler</div>
+                                    <button className="modal__confirmedition">Confirmer l'édition</button>
+                                </div>
+                            </form>
+                            
+                            
+                        </div>
+            </div> }     
 
             
 

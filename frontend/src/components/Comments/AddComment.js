@@ -20,50 +20,50 @@ function AddComments (){
 
 const [stateAddImage, setStateAddImage] = useState()
 
+/*
 console.log("stateAddImage !")
 console.log(stateAddImage)
 console.log("stateAddImage !")
+*/
 
+/*console.log("stateAddCommentForm")
 console.log(stateAddCommentForm)
+console.log("stateAddCommentForm")
+*/
   
 
-    const handleChange = (event) => {
-      setStateAddCommentForm({
-        ...stateAddCommentForm,
-        [event.target.id]: event.target.value
-
-      });
-           
-    } 
+const handleChange = (event) => {
+  setStateAddCommentForm({
+    ...stateAddCommentForm,
+    [event.target.id]: event.target.value
+  });     
+} 
     
-    const fileHandleChange = (event) => {
-        setStateAddImage(event.target.files[0])
-    }      
+const fileHandleChange = (event) => {
+  setStateAddImage(event.target.files[0])
+}      
     
-      const handleSubmit = async event => {      
-        event.preventDefault();   
+const handleSubmit = async event => {      
+  event.preventDefault();   
 
-        formData.append (  "comment", JSON.stringify(stateAddCommentForm)  )
-        formData.append("image", stateAddImage);
+  formData.append (  "comment", JSON.stringify(stateAddCommentForm)  )
+  formData.append("image", stateAddImage);
 
+        /*
         console.log("formData.getKEY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         for (var key of formData.keys()) {
           console.log(key);
-       }
-       console.log("formData.getAll()")
-       console.log(formData.getAll("image"))
-       console.log("formData.getAll()")
-       console.log("formData.getAll()")
+        }
+        console.log("formData.getAll()")
+        console.log(formData.getAll("image"))
+        console.log("formData.getAll()")
+        console.log("formData.getAll()")
         console.log(formData.getAll("comment"))
         console.log("formData.getAll()")
         console.log("formData.getKEY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        
+        */
 
-        
-
-        
-
-        if (stateAddImage !== undefined ) {
+    if (stateAddImage !== undefined ) {
           console.log("il y a une image à envoyer")
           try { 
           const response = await createNewComment(formData);
@@ -72,18 +72,20 @@ console.log(stateAddCommentForm)
          } 
          catch(error) {
            console.log(error)
-         }   }
+         }   
+    }
 
-         else {
-          console.log("il n'y a pas d'images à envoyer")
-          try { 
+    else {
+        console.log("il n'y a pas d'images à envoyer")
+        try { 
           const response = await createNewComment(formData);
-          console.log(response)   
-                    
-         } catch(error) {
+          console.log(response)               
+        } 
+        catch(error) {
            console.log(error)
-         }   }
-       }   
+        }   
+    }
+};   
 
 
 

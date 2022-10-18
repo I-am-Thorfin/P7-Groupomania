@@ -23,6 +23,8 @@ export default function Navbar() {
     setToggleMenu(!toggleMenu)
   }
 
+  const clickOnlink = () => { setToggleMenu(false) }
+
   useEffect ( () => {
     const changeWidth = () => {
         setLargeur(window.innerWidth);
@@ -49,10 +51,10 @@ export default function Navbar() {
              {
              (!auth.isLogin && (
               <>
-                <li className="nav__list--items">
+                <li className="nav__list--items" onClick={clickOnlink}>
                   <Login/>
                 </li>
-                <li className="nav__list--items">
+                <li className="nav__list--items" onClick={clickOnlink}>
                   <Signup/>
                 </li>
               </>
@@ -60,10 +62,10 @@ export default function Navbar() {
              ||
               (
                 <>
-                  <li className="nav__list--items">
+                  <li className="nav__list--items" onClick={clickOnlink}>
                     <Myprofil/>
                   </li>
-                  <li className="nav__list--items">
+                  <li className="nav__list--items" onClick={clickOnlink}>
                     <Logout/>
                   </li>
                 </>

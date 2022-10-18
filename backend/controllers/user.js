@@ -114,14 +114,58 @@ exports.deleteUser = (req, res, next) => {
                     });                  
                 }
 
-
-
-         
-
-
-               
-            
-
         })
         .catch(error => res.status(500).json({ message: error.message }));
+};
+
+
+
+
+exports.modifyUser = (req, res, next) => {
+
+    User.findOne({ _id: req.params.id })
+    .then((user) => {
+        // Pour la comparaison des UserID on réccupère l'id en décryptant le token
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET'); 
+        const userId = decodedToken.userId;
+        const isAdmin = decodedToken.isAdmin;
+        
+        
+        
+        console.log("///////req.file")
+        console.log(req.file)
+        console.log("////////////")
+
+        console.log("///////req.body.user ( Parse Json )/////")
+        console.log(JSON.parse(req.body.user))
+        console.log("////////////")
+
+
+
+        console.log("///////user._id")
+        console.log( user.id )
+        console.log("////////////")
+        
+
+        if ( (user.id !== userId) && (isAdmin === false) ) {
+            res.status(403).json({
+                message: 'Vous ne pouvez modifier ce compte'
+            });
+        }
+        else {
+            const modifyObject = JSON.parse(req.body.user)
+            const userObject = req.file ?
+        {
+            ...modifyObject,
+            avatar: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,            
+            
+        } : { ...modifyObject, }
+    User.updateOne({ _id: req.params.id }, { ...userObject, _id: req.params.id })
+    
+    
+    .then(() => res.status(200).json({ message: 'Compte modifié !' }))
+    .catch(error => res.status(400).json({ error }))
+        }
+     });
 };

@@ -18,6 +18,7 @@ export function getAllComments(setState) {
      .catch (error => (console.log(error))) 
   }
 
+
   export function modifyOneComment(commentId, formdata) {
 
     const token = getItem('key_token');
@@ -37,6 +38,7 @@ export function getAllComments(setState) {
   }
 
 
+  
 export function createNewComment(ourForm) {
     const token = getItem('key_token');
     

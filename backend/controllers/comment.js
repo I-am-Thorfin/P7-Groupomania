@@ -60,9 +60,6 @@ exports.createComment = (req, res, next) => {
         .then(() => res.status(201).json({ message: 'Commentaire !' }))
         .catch(error => res.status(400).json({ error }))  }
 
-
-
-    
 };
 
 
@@ -79,7 +76,9 @@ exports.modifyComment = (req, res, next) => {
         const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET'); 
         const userId = decodedToken.userId;
         const isAdmin = decodedToken.isAdmin;
+        console.log("///////comment.userId")
         console.log(comment.userId)
+        console.log("///////comment.userId")
         
 
         console.log("///////req.file")
@@ -100,10 +99,10 @@ exports.modifyComment = (req, res, next) => {
             const commentObject = req.file ?
         {
             ...modifyObject,
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+            isImage: true,
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,            
             
-            
-        } : { ...modifyObject }
+        } : { ...modifyObject, }
     Comment.updateOne({ _id: req.params.id }, { ...commentObject, _id: req.params.id })
     
     
