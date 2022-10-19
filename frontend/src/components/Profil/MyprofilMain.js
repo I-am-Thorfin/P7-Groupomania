@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext} from "../../contexts/AuthContext"
-import { checkStorage } from '../../services/AuthApi';
 import { Navigate, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
@@ -40,9 +39,11 @@ function MyprofilMain (){
                 return axios
                 .get(`http://localhost:8000/api/auth/${profilParamsId}`, config)
                 .then(response => {  
+                   /*  
                     console.log("response.data")
                     console.log(response.data)
                     console.log("response.data")
+                   */ 
                     if ( response.data == null) { navigate("/userunfound")}
                     else {setGetUser( response.data ) }
                              

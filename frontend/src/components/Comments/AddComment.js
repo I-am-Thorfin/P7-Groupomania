@@ -20,8 +20,8 @@ function AddComments (){
 
 const [stateAddImage, setStateAddImage] = useState()
 
-const [modalImgPreview, setModalImgPreview] = useState(false)
-const [previewImg, setPreviewImg] = useState ({})
+const [modalAddImgPreview, setModalAddImgPreview] = useState(false)
+const [previewAddImg, setPreviewAddImg] = useState ({})
 
 /*
 console.log("stateAddImage !")
@@ -34,10 +34,10 @@ console.log(stateAddCommentForm)
 console.log("stateAddCommentForm")
 */
 
-const deleteModifyImg = event => {
+const deleteNewImg = event => {
   setStateAddImage()
-  setModalImgPreview(false)  
-  setPreviewImg({})
+  setModalAddImgPreview(false)  
+  setPreviewAddImg({})
 }
   
 
@@ -48,10 +48,10 @@ const handleChange = (event) => {
   });     
 } 
     
-const fileHandleChange = (event) => {
+const AddFileHandleChange = (event) => {
   setStateAddImage(event.target.files[0])
-  setPreviewImg({imageUrl : window.URL.createObjectURL(event.target.files[0])})
-  setModalImgPreview(true)
+  setPreviewAddImg({imageUrl : window.URL.createObjectURL(event.target.files[0])})
+  setModalAddImgPreview(true)
 
 }      
     
@@ -116,20 +116,20 @@ const handleSubmit = async event => {
               </textarea>
 
               
-              { (modalImgPreview && 
+              { (modalAddImgPreview && 
                                     (<div className="addcomment__preview">
-                                        <img src={previewImg.imageUrl} alt="Aperçu de votre choix d'image" />
+                                        <img src={previewAddImg.imageUrl} alt="Aperçu de votre choix d'image" />
                                         <p>Aperçu</p>
                                         <div className="addcomment__preview--overlay"></div>
                                         <div className="button__container">
 
-                                        <label className="button__container--btn" htmlFor="newimage" >
+                                        <label className="button__container--btn" htmlFor="newaddimage" >
                                         MODIFIER
                                        </label>    
-                                        <input type='file' id="newimage" name="newimage" accept="image/png, image/jpeg" 
-                                        onChange={fileHandleChange} > 
+                                        <input type='file' id="newaddimage" name="newaddimage" accept="image/png, image/jpeg" 
+                                        onChange={AddFileHandleChange} > 
                                         </input>
-                                        <div className="button__container--btn" onClick={deleteModifyImg}> 
+                                        <div className="button__container--btn" onClick={deleteNewImg}> 
                                                 SUPPRIMER
                                         </div>
 
@@ -139,11 +139,11 @@ const handleSubmit = async event => {
                                     ||
                                     (
                                     <>
-                                      <label className='addImageLabel' htmlFor="image">
+                                      <label className='addImageLabel' htmlFor="addimage">
                                         <i className="fas fa-plus" aria-label='Ajouter une image'></i>
                                       </label>
-                                      <input type='file' id="image" name="image" accept="image/png, image/jpeg" 
-                                      onChange={fileHandleChange} > 
+                                      <input type='file' id="addimage" name="addimage" accept="image/png, image/jpeg" 
+                                      onChange={AddFileHandleChange} > 
                                       </input>
                                     </>
                                     )  

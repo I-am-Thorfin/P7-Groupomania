@@ -39,12 +39,12 @@ console.log("//// commentModification // END///")
 /// MODALE D'EDITION ///
 
 const [modalModify, setModalModify] = useState(false)
-const [modalImgPreview, setModalImgPreview] = useState(props.isImage)
+const [modalImgModifyPreview, setModalImgModifyPreview] = useState(props.isImage)
 
 const toggleModalModify = () => {
     setModalModify(!modalModify);
     setPreviewImg({imageUrl : props.imageUrl, isImage : props.isImage})
-    setModalImgPreview(props.isImage)
+    setModalImgModifyPreview(props.isImage)
     setCommentModification({commentTxt : props.txt})
     setCommentImageModification()   
 }
@@ -62,7 +62,7 @@ const handleChange =  event => {
  const fileHandleChange =  event => {      
     setCommentImageModification(event.target.files[0])
     setPreviewImg({imageUrl : window.URL.createObjectURL(event.target.files[0])})
-    setModalImgPreview(true)
+    setModalImgModifyPreview(true)
     
     console.log(" -> on passe la modale de preview sur true pour l'afficher")
     console.log(event.target.value)
@@ -72,7 +72,7 @@ const handleChange =  event => {
 
 const deleteModifyImg = event => {
     console.log("On delete l'image")
-    setModalImgPreview(false)
+    setModalImgModifyPreview(false)
     setCommentImageModification({})
     setCommentModification({imageUrl: "", isImage : false, commentTxt : commentModification.commentTxt,
 })
@@ -271,17 +271,17 @@ console.log("getUser")
                                 </textarea>
                                 
 
-                                { (modalImgPreview && 
+                                { (modalImgModifyPreview && 
                                     (<div className="modifycomment__preview">
                                         <img src={previewImg.imageUrl} alt="Aperçu de votre choix d'image" />
                                         <p>Aperçu</p>
                                         <div className="modifycomment__preview--overlay"></div>
                                         <div className="button__container">
 
-                                        <label className="button__container--btn" htmlFor="newimage" >
+                                        <label className="button__container--btn" htmlFor="newmodifyimage" >
                                         MODIFIER
                                        </label>    
-                                        <input type='file' id="newimage" name="newimage" accept="image/png, image/jpeg" 
+                                        <input type='file' id="newmodifyimage" name="newmodifyimage" accept="image/png, image/jpeg" 
                                         onChange={fileHandleChange} > 
                                         </input>
                                         <div className="button__container--btn" onClick={deleteModifyImg}> 

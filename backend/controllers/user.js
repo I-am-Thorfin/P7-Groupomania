@@ -12,7 +12,8 @@ exports.signup = (req, res, next) => {
     .HmacSHA256(req.body.email, `${process.env.CRYPTOJS_KEY_FOR_EMAIL}`)
     .toString();
 
-    console.log("password",req.body)
+    /* console.log("password",req.body)*/
+    
     bcrypt.hash(req.body.password, 10)
       .then(hash => {
         const user = new User({
@@ -95,10 +96,12 @@ exports.deleteUser = (req, res, next) => {
                 const checkadmin = decodedToken.isAdmin 
                 const authUser = user.id;
 
-                console.log("checkadmin")
-                console.log(checkadmin)
-                console.log("userId")
-                console.log(userId)
+
+
+                //console.log("checkadmin")
+                //console.log(checkadmin)
+                //console.log("userId")
+                //console.log(userId)
                 
                 
                     
@@ -132,21 +135,22 @@ exports.modifyUser = (req, res, next) => {
         const isAdmin = decodedToken.isAdmin;
         
         
-        
+        /*
         console.log("///////req.file")
         console.log(req.file)
         console.log("////////////")
-
+        */
+        /*
         console.log("///////req.body.user ( Parse Json )/////")
         console.log(JSON.parse(req.body.user))
         console.log("////////////")
+        */
 
-
-
+        /*
         console.log("///////user._id")
         console.log( user.id )
         console.log("////////////")
-        
+        */
 
         if ( (user.id !== userId) && (isAdmin === false) ) {
             res.status(403).json({

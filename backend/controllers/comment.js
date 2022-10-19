@@ -22,18 +22,21 @@ exports.getOneComment = (req, res, next) => {
 ////* CREATION D'UN COMMENTAIRE *////
 
 exports.createComment = (req, res, next) => {
+   /*
     console.log("///////req.body/////")
     console.log(req.body)
     console.log("////////////")
-
+   */
+    /*
     console.log("///////req.body.comment ( Parse Jason )/////")
     console.log(JSON.parse(req.body.comment))
     console.log("////////////")
-
+    */
+    /*
     console.log("///////req.file")
     console.log(req.file)
     console.log("////////////")
-    
+    */
     const commentObject = JSON.parse(req.body.comment)
     delete commentObject._id
 
@@ -76,19 +79,25 @@ exports.modifyComment = (req, res, next) => {
         const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET'); 
         const userId = decodedToken.userId;
         const isAdmin = decodedToken.isAdmin;
+
+        /*
         console.log("///////comment.userId")
         console.log(comment.userId)
         console.log("///////comment.userId")
+        */
         
-
+        /*
         console.log("///////req.file")
         console.log(req.file)
         console.log("////////////")
+        */
 
+        /*
         console.log("///////req.body.comment ( Parse Json )/////")
         console.log(JSON.parse(req.body.comment))
         console.log("////////////")
-
+        */
+       
         if ( (comment.userId !== userId) && (isAdmin === false) ) {
             res.status(403).json({
                 message: 'Vous ne pouvez modifier ce commentaire'

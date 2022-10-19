@@ -9,10 +9,10 @@ module.exports = (req, res, next) => {
        const token = req.headers.authorization.split(' ')[1];
        
        const decodedToken = jwt.verify(token, `${process.env.AUTH_TOKEN_JWT}`);
-       console.log("FROM ./MIDDLEWARE/AUTH.JS ---  Notre token : ", token);
+      // console.log("FROM ./MIDDLEWARE/AUTH.JS ---  Notre token : ", token);
        
        const userId = decodedToken.userId;
-       console.log("FROM ./MIDDLEWARE/AUTH.JS ---  decodedToken : ", decodedToken);
+      // console.log("FROM ./MIDDLEWARE/AUTH.JS ---  decodedToken : ", decodedToken);
 
        
        
