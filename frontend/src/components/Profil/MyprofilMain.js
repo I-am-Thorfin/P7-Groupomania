@@ -104,6 +104,10 @@ const [modalModify, setModalModify] = useState(false)
 
 const toggleModalModify = () => {
     setModalModify(!modalModify)
+    setModalCHeckProfileImg(false)
+    setUserImageModifications({})
+    setUserModifications({})
+
 }
 
 ////fonction d'édition////
@@ -148,6 +152,36 @@ formDataEdition.append("image", userImageModification);
 
     modifyOneUser(auth.userId, formDataEdition)
 }  
+
+const userProfileAvatar = JSON.stringify(getUser.avatar)
+console.log(userProfileAvatar)
+const [previewProfilImg, setPreviewProfilImg] = useState()
+
+const [modalCheckProfileImg, setModalCHeckProfileImg] = useState(false)
+
+
+
+
+
+
+
+const addNewProfileImage =  event => {
+    setModalCHeckProfileImg(true)
+    setPreviewProfilImg({avatar : window.URL.createObjectURL(event.target.files[0])})
+    setUserImageModifications(event.target.files[0])
+}
+
+const deleteNewProfileImage =  event => {
+    setUserImageModifications({}) 
+    setPreviewProfilImg({avatar : "http://localhost:8000/images/default/avatardefault.png",})
+    setModalCHeckProfileImg(true)
+    setUserModifications({
+        ...userModification,
+        avatar : "http://localhost:8000/images/default/avatardefault.png"
+      });
+}
+
+
 
 
 
@@ -219,6 +253,43 @@ formDataEdition.append("image", userImageModification);
                             </div>
                             
                             <div className="modal__style"></div>
+
+
+
+                               
+                                    <div className="profil__preview">
+                                    
+
+                                    { (!modalCheckProfileImg && 
+                                    (<img src={getUser.avatar} alt="Aperçu de votre choix d'image" />
+                                    ))
+                                    ||
+                                    (
+                                    <>
+                                      <img src={previewProfilImg.avatar} alt="Aperçu de votre choix d'image" />
+                                    </>
+                                    )  
+                                    }
+                                       
+                                        <p>Aperçu</p>
+                                        <div className="profil__preview--overlay"></div>
+                                        <div className="button__container">
+
+                                        <label className="button__profilcontainer--btn" htmlFor="newprofilimage" >
+                                        MODIFIER
+                                       </label>    
+                                        <input type='file' id="newprofilimage" name="newprofilimage" accept="image/png, image/jpeg" 
+                                        onChange={addNewProfileImage} > 
+                                        </input>
+                                        <div className="button__profilcontainer--btn" onClick={deleteNewProfileImage}> 
+                                                SUPPRIMER
+                                        </div>
+
+                                        </div>
+                                        
+                                    </div>
+                                   
+
                             <form className ="mainprofilmodal__form" onSubmit={submitUserModify}>
                                 <label htmlFor="lastname">
                                     Nom :
@@ -232,12 +303,7 @@ formDataEdition.append("image", userImageModification);
                                 <input type='text' id="firstname" name="firstname" placeholder={getUser.firstname}
                                 onChange={handleChange}> 
                                 </input>
-                                <label htmlFor="image">
-                                <i className="fas fa-images"></i> Voulez-vous modifier votre photo de profil ?
-                                </label>
-                                <input type='file' id="image" name="image" accept="image/png, image/jpeg" 
-                                onChange={fileHandleChange} > 
-                                </input>
+                                
                                 
                                 <div className='profilmodal__button'>
                                     <div className="modal__cancel" onClick={toggleModalModify}>Annuler</div>
