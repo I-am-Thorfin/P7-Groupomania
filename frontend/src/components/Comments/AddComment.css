@@ -6,6 +6,8 @@
     box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.4);
     margin-top: 100px;
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .addcomment__intro {
@@ -67,9 +69,9 @@ margin-top: 10px;
     
     }
 
-.addcomment__form>button {
-    padding: 5px;
-    margin: 10px;
+.addcomment__form button {
+ margin-left: 30%;
+ margin-right: 30%;
 }
 
 
@@ -79,3 +81,127 @@ margin-top: 10px;
     flex-direction: column;
     align-items: center;
 }
+
+.addcomment__preview {
+    position: relative;
+    margin-top: 10px;
+    width: 90%;
+    height: 250px;
+  }
+  
+.addcomment__preview--overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.5s ease;
+  }
+  
+.addcomment__preview:hover .addcomment__preview--overlay {
+    display: block;
+    background: rgba(0, 0, 0, .6);
+  }
+  
+.addcomment__preview img {
+    
+    width: 100%;
+    left: 0;
+    max-height: 250px;
+    object-fit: cover;
+    width: 100%; 
+  }
+  
+.addcomment__preview p {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 120px;
+    font-weight: 700;
+    font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    z-index: 1;
+    transition: top .5s ease;
+  }
+  
+.addcomment__preview:hover p {
+    top: 90px;
+  }
+  
+.button__container--btn {
+    width: 40%;
+    padding: 5px;
+    margin: 5px;
+    
+    text-align: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+    color: white;
+    border: solid 2px white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+.button__container--btn:hover  {
+    font-weight: bold;
+    border: dashed 2px white;
+    
+}
+
+.addcomment__preview input[type="file"] {
+    display: none;
+  } 
+
+.addcomment__preview .button__container {  
+    
+    position: absolute;
+    width: 100%; 
+    top: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+  
+.addcomment__preview:hover .button__container--btn {
+    opacity: 1;
+}
+
+
+.addImageLabel { 
+    margin-left: 30%;
+    margin-right: 30%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FD2D01;
+    cursor: pointer;
+    box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.1);
+    transition: 0.4s ease;
+
+}
+
+.addImageLabel:hover {
+    background-color: #FFD7D7;
+    box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.4);   
+}
+.addImageLabel:hover i {
+    color: #282c34;
+}
+
+.addImageLabel i {
+    font-size: 22px;
+    color: white;
+    transition: 0.7s ease;
+}
+
+input[type="file"] {
+    display: none;
+  } 

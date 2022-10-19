@@ -15,11 +15,9 @@ function AddComments (){
   const [ stateCommentsList, setStateCommentsList] = useState([])
   const [ watchForLike, setWatchForLike] = useState(1)
 
-  // On s'assure de la connexion en arrivant ici :
-  checkStorage(setAuth)
+  
 
   ///////////// FONCTION DE RECCUPERATION DES COMMENTAIRE DEPUIS L'API  /////////////
-  
   ///APPEL DE LA FONCTION DE RECCUPERATION///
   useEffect(() => {
 
@@ -46,10 +44,10 @@ function AddComments (){
 
    const fileHandleChange = (event) => {
 
-      console.log("StateaddcommentForm :") 
+  /*    console.log("StateaddcommentForm :") 
       console.log(event.target.files[0])
       console.log("StateaddcommentForm END///")
-
+  */
       setStateAddCommentForm ({...stateAddCommentForm, [event.target.id]: event.target.files[0]})
     }
       const handleSubmit = async event => {      
@@ -131,19 +129,22 @@ function AddComments (){
     }
 
     //END/////////// FONCTION DE LIKE  ///////////END//
-
-    console.log("///// stateCommentsList /////")
+  
+  /*
+  console.log("///// stateCommentsList /////")
   console.log(stateCommentsList)
   console.log("///// stateCommentsList /////")
-  
+  */
+  /*
   console.log("auth")
   console.log(auth)
   console.log("auth")
-  
+  */
   return (
     <>  
          {!auth.isLogin && <Navigate to="/login" />}
 
+         
 
         < AddComment/>
 

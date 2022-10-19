@@ -17,9 +17,6 @@ function MyprofilMain (){
     const {auth, setAuth} = useContext(AuthContext);
     const navigate = useNavigate();
 
-    // On s'assure de la connexion en arrivant ici :
-    checkStorage(setAuth)
-
     ///////////// FONCTION DE RECCUPERATION D'UN USER EN FONCTION DE L'ID DANS L'URL  /////////////
 
     const params = useParams();
@@ -34,8 +31,6 @@ function MyprofilMain (){
         if (auth.isLogin ===false) { console.log("is login false")}
 
         else {
-            
-
             function getOneUser() {
                 const token = getItem('key_token');
                
@@ -58,36 +53,36 @@ function MyprofilMain (){
             }
             getOneUser()
         }
-
-        
     }, [])
 
+//console.log(getUser)
 
-    console.log(getUser)
-
-
-    
-
-  //END/////////// FONCTION DE RECCUPERATION D'UN USER EN FONCTION DE L'ID DANS L'URL  ///////////END//
+//END/////////// FONCTION DE RECCUPERATION D'UN USER EN FONCTION DE L'ID DANS L'URL  ///////////END//
 
 
-  ///////////// FONCTION DE SUPPRESSION DU COMPTE  /////////////
+///// MODALE DE SUPPRESSION /////  
+
+const [modalDelete, setModalDelete] = useState(false)
+const toggleModalDelete = () => {
+    setModalDelete(!modalDelete)
+}
+
+///// MODALE DE SUPPRESSION ///END//  
   
-
-  const delUserFunction = (event) => {
-
-    
+  ///////////// FONCTION DE SUPPRESSION DU COMPTE  /////////////
+const delUserFunction = (event) => {
     const token = getItem('key_token');
-   
     const config = {
         headers : { Authorization: `Bearer ${token}`}
     };
-
     return axios
     .delete(`http://localhost:8000/api/auth/${profilParamsId}`, config)
     .then(response => {  console.log(response)
         if (auth.userId === profilParamsId) { logout()
-            navigate("/home")
+            setAuth ({isLogin : false, isAdmin : false, 
+                userId : "",
+                lastname : "",
+                firstname : ""}) 
          } 
         else { navigate("/home")  }                
      }) 
@@ -117,19 +112,20 @@ const handleChange =  event => {
         [event.target.name]: event.target.value
       });
 }  
-
+/*
 console.log("userModification")
 console.log(userModification)
 console.log("userModification")
-
+*/
 const fileHandleChange =  event => {      
     setUserImageModifications(event.target.files[0])
 } 
 
+/*
 console.log("userImageModification")
 console.log(userImageModification)
 console.log("userImageModification")
-
+*/
 
 
 const submitUserModify = async event => { 
@@ -138,13 +134,16 @@ event.preventDefault();
 formDataEdition.append ("user", JSON.stringify(userModification)  )
 formDataEdition.append("image", userImageModification); 
 
-    console.log("formDataEdition.getAll()")
-    console.log(formDataEdition.getAll("image"))
-    console.log("formDataEdition.getAll()")
-    console.log("formDataEdition.getAll()")
-    console.log(formDataEdition.getAll("user"))
-    console.log("formDataEdition.getAll()")
+/*
     console.log("formDataEdition.getKEY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    console.log("formDataEdition.getAll(image)")
+    console.log(formDataEdition.getAll("image"))
+    console.log("formDataEdition.getAll(image) END")
+    console.log("formDataEdition.getAll(USER)")
+    console.log(formDataEdition.getAll("user"))
+    console.log("formDataEdition.getAll(USEr) END")
+    console.log("formDataEdition.getKEY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+*/
 
     modifyOneUser(auth.userId, formDataEdition)
 }  
@@ -187,12 +186,28 @@ formDataEdition.append("image", userImageModification);
                 {
             ( ((getUser._id === auth.userId) || (auth.isAdmin === true ) ) && (
                 <div className='profil__button'>
-                  <button className="profil__button--delete" onClick={delUserFunction} > supprimer </button>
+                  <button className="profil__button--delete" onClick={toggleModalDelete} > supprimer </button>
                   <button className="profil__button--edit" onClick={toggleModalModify} > Editer </button>
                 </div>
             )) 
              
         } 
+
+        { modalDelete &&
+            <div className="modal__overlay">
+                        <div className="modal__body">
+                            <div className="modal__title">
+                                <h2>Attention ! </h2>
+                            </div>
+                            <div className="modal__style"></div>
+                            <div className="modal__warning">Vous vous apprêtez à supprimer ce compte et cette action est irréversible. Voulez-vous réellement mener cette action à son terme ?</div>
+                            <div>
+                                <button className="modal__cancel" onClick={toggleModalDelete}>Annuler</button>
+                                <button className="modal__delete" onClick={delUserFunction}>Supprimer</button>
+                            </div>
+                        </div>
+            </div> 
+        }
 
 
         { modalModify &&
@@ -228,21 +243,10 @@ formDataEdition.append("image", userImageModification);
                                     <button className="modal__confirmedition">Confirmer l'édition</button>
                                 </div>
                             </form>
-                            
-                            
+
                         </div>
             </div> }     
 
-            
-
-             
-
-
-
-            
-
-           
-         
             <>
                 {!auth.isLogin && <Navigate to="/login" />}
             </>

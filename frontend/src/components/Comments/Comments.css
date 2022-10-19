@@ -187,6 +187,12 @@
     width: 100%;
     height: 3px;
 }
+.modal__form--inputcommenttxt { 
+    width: 80%;
+    margin-left: 10px;
+    height: 50px;
+
+ }
 
 .modal__warning {
     padding: 5%;
@@ -269,4 +275,163 @@
     background-color:#555a80;
     box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.4);
 } 
+
+
+.modifycomment__form {
+    display: flex;
+    padding: 10px;
+    margin:10px;    
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap
+}
+
+.modifycomment__form--inputcommenttxt { 
+    width: 80%;
+    margin-left: 10px;
+    height: 50px;
+
+ }
+
+.modifycomment__form>input {
+width: 80%;
+margin-left: 5%;
+margin-top: 10px;
+
+}
+.modifycomment__form>label{
+   margin-top: 15px;
+    
+    }
+
+
+.modifyImageLabel { 
+        margin-left: 30%;
+        margin-right: 30%;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #FD2D01;
+        cursor: pointer;
+        box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.1);
+        transition: 0.4s ease;
+    
+    }
+    
+    .modifyImageLabel:hover {
+        background-color: white;
+        box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.4);   
+    }
+    .modifyImageLabel:hover i {
+        color: #282c34;
+    }
+    
+    .modifyImageLabel i {
+        font-size: 22px;
+        color: white;
+        transition: 0.7s ease;
+    }
+    
+    input[type="file"] {
+        display: none;
+      }     
+
+
+
+
+
+
+
+
+.modifycomment__preview {
+    position: relative;
+    margin-top: 10px;
+    width: 90%;
+    height: 250px;
+  }
+  
+.modifycomment__preview--overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.5s ease;
+  }
+  
+.modifycomment__preview:hover .modifycomment__preview--overlay {
+    display: block;
+    background: rgba(0, 0, 0, .6);
+  }
+  
+.modifycomment__preview img {
+    
+    width: 100%;
+    left: 0;
+    max-height: 250px;
+    object-fit: cover;
+    width: 100%; 
+  }
+  
+.modifycomment__preview p {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 120px;
+    font-weight: 700;
+    font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    color: white;
+    z-index: 1;
+    transition: top .5s ease;
+  }
+  
+.modifycomment__preview:hover p {
+    top: 90px;
+  }
+  
+.button__container--btn {
+    width: 40%;
+    padding: 5px;
+    margin: 5px;
+    
+    text-align: center;
+    opacity: 0;
+    transition: opacity .35s ease;
+    color: white;
+    border: solid 2px white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+.button__container--btn:hover  {
+    font-weight: bold;
+    border: dashed 2px white;
+    
+}
+
+.modifycomment__preview input[type="file"] {
+    display: none;
+  } 
+
+.modifycomment__preview .button__container {  
+    
+    position: absolute;
+    width: 100%; 
+    top: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+  
+.modifycomment__preview:hover .button__container--btn {
+    opacity: 1;
+}
 

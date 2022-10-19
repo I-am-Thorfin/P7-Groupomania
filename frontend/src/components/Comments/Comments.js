@@ -1,7 +1,6 @@
 import './Comments.css'
-import avatar from './roll-safe-meme-1.jpg';
 import { useContext, useEffect, useState } from 'react';
-import {AuthContext} from "../../contexts/AuthContext"
+import {AuthContext} from "../../contexts/AuthContext";
 import {modifyOneComment} from "../../services/CommentApi"
 import { getItem } from '../../services/LocaleStorage'
 import axios from 'axios'
@@ -26,33 +25,66 @@ const toggleModalDelete = () => {
 
 /////////// EDITION D'UNE PUBLICATION //////////////
 const formDataEdition = new FormData();
-const [commentModification, setCommentModifications] = useState({commentTxt : props.txt})
-const [commentImageModification, setCommentImageModifications] = useState()
+const [commentModification, setCommentModification] = useState({commentTxt : props.txt})
+const [commentImageModification, setCommentImageModification] = useState()
+const [previewImg, setPreviewImg] = useState ({imageUrl : props.imageUrl,
+isImage : props.isImage })
 
+/*
+console.log("//// commentModification /////")
 console.log(commentModification)
+console.log("//// commentModification // END///")
+*/
 
 /// MODALE D'EDITION ///
 
 const [modalModify, setModalModify] = useState(false)
+const [modalImgPreview, setModalImgPreview] = useState(props.isImage)
 
 const toggleModalModify = () => {
-    setModalModify(!modalModify)
+    setModalModify(!modalModify);
+    setPreviewImg({imageUrl : props.imageUrl, isImage : props.isImage})
+    setModalImgPreview(props.isImage)
+    setCommentModification({commentTxt : props.txt})
+    setCommentImageModification()   
 }
+
+
 /// fonction d'édition ///
 
 const handleChange =  event => {      
-        setCommentModifications({
+        setCommentModification({
           ...commentModification,
           [event.target.name]: event.target.value
         });
  }  
 
  const fileHandleChange =  event => {      
-    setCommentImageModifications(event.target.files[0])
+    setCommentImageModification(event.target.files[0])
+    setPreviewImg({imageUrl : window.URL.createObjectURL(event.target.files[0])})
+    setModalImgPreview(true)
+    
+    console.log(" -> on passe la modale de preview sur true pour l'afficher")
+    console.log(event.target.value)
+    console.log(" -> On met l'url dans la preview")
 
 }  
 
-const submitCommentModify = async event => { 
+const deleteModifyImg = event => {
+    console.log("On delete l'image")
+    setModalImgPreview(false)
+    setCommentImageModification({})
+    setCommentModification({imageUrl: "", isImage : false, commentTxt : commentModification.commentTxt,
+})
+
+    console.log(commentImageModification)
+    console.log(" -> On vire la modal de preview")
+    console.log(" -> On setCommentImageModification pour dire qu'il n'y a plus d'image")
+    console.log(" -> On setCommentModification pour changer imageUrl")   
+
+}
+
+const submitCommentModify = event => { 
     event.preventDefault(); 
 
     formDataEdition.append ("comment", JSON.stringify(commentModification)  )
@@ -91,10 +123,12 @@ const [isStillUser, setIsStillUser] = useState (true);
             };
             return axios
             .get(`http://localhost:8000/api/auth/${props.userId}`, config)
-            .then(response => {  
+            .then(response => { 
+                /*
                 console.log("response.data")
                 console.log(response.data)
                 console.log("response.data")
+                */
                 if ( response.data == null) { console.log("Si l'ID est une ID valide mais que l'utilisateur n'existe plus")
                 setIsStillUser(false) 
             }
@@ -108,10 +142,11 @@ const [isStillUser, setIsStillUser] = useState (true);
         getOneUser()
     }
     
-    console.log("getUser")
-    console.log(getUser)
-    console.log("getUser")
-
+/* 
+console.log("getUser")
+console.log(getUser)
+console.log("getUser")
+*/
     
 }, [])
     return (
@@ -227,20 +262,47 @@ const [isStillUser, setIsStillUser] = useState (true);
                                 <h2> Modifier la publication </h2>
                             </div>
                             <div className="modal__style"></div>
-                            <form className ="addcomment__form" onSubmit={submitCommentModify}>
+                            <form className ="modifycomment__form" onSubmit={submitCommentModify}>
                                 <label htmlFor="commentTxt">
                                     <i className="far fa-comment fa-2x"></i>
                                 </label>
-                                <input type='text' id="commentTxt" name="commentTxt" placeholder={commentModification.commentTxt}
+                                <textarea className="modal__form--inputcommenttxt" type='text' id="commentTxt" name="commentTxt" placeholder={commentModification.commentTxt}
                                 onChange={handleChange}> 
-                                </input>
-                                <label htmlFor="image">
-                                <i className="fas fa-images"></i> Voulez-vous modifiez la photo de votre publication ?
-                                </label>
-                                <input type='file' id="image" name="image" accept="image/png, image/jpeg" 
-                                onChange={fileHandleChange} > 
-                                </input>
+                                </textarea>
                                 
+
+                                { (modalImgPreview && 
+                                    (<div className="modifycomment__preview">
+                                        <img src={previewImg.imageUrl} alt="Aperçu de votre choix d'image" />
+                                        <p>Aperçu</p>
+                                        <div className="modifycomment__preview--overlay"></div>
+                                        <div className="button__container">
+
+                                        <label className="button__container--btn" htmlFor="newimage" >
+                                        MODIFIER
+                                       </label>    
+                                        <input type='file' id="newimage" name="newimage" accept="image/png, image/jpeg" 
+                                        onChange={fileHandleChange} > 
+                                        </input>
+                                        <div className="button__container--btn" onClick={deleteModifyImg}> 
+                                                SUPPRIMER
+                                        </div>
+
+                                        </div>
+                                        
+                                    </div>))
+                                    ||
+                                    (
+                                    <>
+                                      <label className='modifyImageLabel' htmlFor="image">
+                                            <i className="fas fa-plus" aria-label='Ajouter une image'></i>
+                                      </label>
+                                      <input type='file' id="image" name="image" accept="image/png, image/jpeg" 
+                                      onChange={fileHandleChange} > 
+                                      </input>
+                                    </>
+                                    )  
+                                }    
                                 <div>
                                     <div className="modal__cancel" onClick={toggleModalModify}>Annuler</div>
                                     <button className="modal__confirmedition">Confirmer l'édition</button>
@@ -250,7 +312,8 @@ const [isStillUser, setIsStillUser] = useState (true);
 
                             
                         </div>
-            </div> }            
+            </div> 
+            }            
         </>
     )
 }

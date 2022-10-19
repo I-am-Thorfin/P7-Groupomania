@@ -8,11 +8,16 @@ function Logout (){
 
     
 
-    const handleLogout = (event) => {
+    const handleLogout = async event => {
        console.log('hello there')
+       
+        await setAuth ({isLogin : false, isAdmin : false, 
+                    userId : "",
+                    lastname : "",
+                    firstname : ""}) 
 
-       logout();
-       setAuth ({isLogin : false});
+        logout();
+        
       }
 
     return (

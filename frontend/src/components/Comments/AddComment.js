@@ -20,6 +20,9 @@ function AddComments (){
 
 const [stateAddImage, setStateAddImage] = useState()
 
+const [modalImgPreview, setModalImgPreview] = useState(false)
+const [previewImg, setPreviewImg] = useState ({})
+
 /*
 console.log("stateAddImage !")
 console.log(stateAddImage)
@@ -30,6 +33,12 @@ console.log("stateAddImage !")
 console.log(stateAddCommentForm)
 console.log("stateAddCommentForm")
 */
+
+const deleteModifyImg = event => {
+  setStateAddImage()
+  setModalImgPreview(false)  
+  setPreviewImg({})
+}
   
 
 const handleChange = (event) => {
@@ -41,6 +50,9 @@ const handleChange = (event) => {
     
 const fileHandleChange = (event) => {
   setStateAddImage(event.target.files[0])
+  setPreviewImg({imageUrl : window.URL.createObjectURL(event.target.files[0])})
+  setModalImgPreview(true)
+
 }      
     
 const handleSubmit = async event => {      
@@ -87,8 +99,6 @@ const handleSubmit = async event => {
     }
 };   
 
-
-
     return (
       <div className="addcomment__container">
       <div className="addcomment__intro">
@@ -104,19 +114,48 @@ const handleSubmit = async event => {
               <textarea className="addcomment__form--inputcommenttxt" type='text' id="commentTxt" name="commentTxt" placeholder="Ecrivez nous ici !"
               onChange={handleChange}> 
               </textarea>
-              <label htmlFor="image">
-                <i className="fas fa-images"></i> Une photo à nous partager ?
-              </label>
-              <input type='file' id="image" name="image" accept="image/png, image/jpeg" 
-              onChange={fileHandleChange} > 
-              </input>
+
+              
+              { (modalImgPreview && 
+                                    (<div className="addcomment__preview">
+                                        <img src={previewImg.imageUrl} alt="Aperçu de votre choix d'image" />
+                                        <p>Aperçu</p>
+                                        <div className="addcomment__preview--overlay"></div>
+                                        <div className="button__container">
+
+                                        <label className="button__container--btn" htmlFor="newimage" >
+                                        MODIFIER
+                                       </label>    
+                                        <input type='file' id="newimage" name="newimage" accept="image/png, image/jpeg" 
+                                        onChange={fileHandleChange} > 
+                                        </input>
+                                        <div className="button__container--btn" onClick={deleteModifyImg}> 
+                                                SUPPRIMER
+                                        </div>
+
+                                        </div>
+                                        
+                                    </div>))
+                                    ||
+                                    (
+                                    <>
+                                      <label className='addImageLabel' htmlFor="image">
+                                        <i className="fas fa-plus" aria-label='Ajouter une image'></i>
+                                      </label>
+                                      <input type='file' id="image" name="image" accept="image/png, image/jpeg" 
+                                      onChange={fileHandleChange} > 
+                                      </input>
+                                    </>
+                                    )  
+                                }
+
+              
               
               <button>Envoyer</button>
           </form>
       </div> 
   </div>
     )
-
 }
 
 export default AddComments;
