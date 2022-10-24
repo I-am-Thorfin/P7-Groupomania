@@ -34,7 +34,9 @@ ou
 
 > nodemon server
 
-Il vous faudra créer un fichier **.env** et le compléter en suivant les indications du fichier **.env exemple**. 
+Il vous faudra créer un fichier **.env** dans le répertoire principal backend et le compléter en suivant les indications du fichier **.env exemple**. 
+
+Pour définir la photo de profil par défaut, il vous faut créer un dossier **images** dans le dossier principal backend. Dans ce dossier **images**, vous devez créer un dossier default. Ajoutez dans images/default votre image de photo de profil par défaut en la nommant "avatardefault"
 
 **Fonctionnement global :**
 
