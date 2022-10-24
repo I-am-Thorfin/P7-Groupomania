@@ -93,14 +93,16 @@ const submitCommentModify = event => {
         for (var key of formDataEdition.keys()) {
           console.log(key);
        }
+       /*
        console.log("formDataEdition.getAll()")
        console.log(formDataEdition.getAll("image"))
-       console.log("formDataEdition.getAll()")
+       co-nsole.log("formDataEdition.getAll()")
        console.log("formDataEdition.getAll()")
         console.log(formDataEdition.getAll("comment"))
         console.log("formDataEdition.getAll()")
         console.log("formDataEdition.getKEY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         modifyOneComment(props.id, formDataEdition)
+        */
  }  
 
 

@@ -22,7 +22,7 @@ function LoginMain(){
 
     const handleChange = ({currentTarget}) => {
         const {name, value} = currentTarget;
-        console.log(name, value);
+        //console.log(name, value);  //-> Pour afficher ce qu'on écrit dans les deux champs. ATTENTION : Ne pas laisser ce console.log visible qui est dangereux pour la sécurité.
 
         setUser({...user, [name]: value})
     }
@@ -32,9 +32,11 @@ function LoginMain(){
 
         try {
             const response = await login(user);
+            /*
             console.log("///response///")
             console.log(response)
             console.log("///response END///")
+            */
             setAuth ({isLogin : response} )  
             window.location.reload()        
             //navigate("/Home")

@@ -174,10 +174,6 @@
             width: 100%;
 }     
 
-
-
-
-
 .profil__preview {
     position: relative;
     margin-top: 10px;
@@ -242,24 +238,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-    
-  }
+    cursor: pointer;    
+}
  
 .button__profilcontainer--btn:hover  {
     font-weight: bold;
-    border: dashed 2px white;
-    
-    
-    
+    border: dashed 2px white; 
 }
 
 .profil__preview input[type="file"] {
     display: none;
-  } 
+} 
 
-.profil__preview .button__container {  
-    
+.profil__preview .button__container {      
     position: absolute;
     width: 100%; 
     top: 160px;
@@ -267,7 +258,6 @@
     align-items: center;
     justify-content: center;
     transition: 0.5s ease;
-
 }
 .profil__preview:hover .button__container
 {

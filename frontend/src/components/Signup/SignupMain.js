@@ -22,7 +22,7 @@ function SignupMain(){
     const handleChange = ({currentTarget}) => {
 
         const {name, value} = currentTarget;
-        console.log(name, value)
+        // console.log(name, value)  //-> Pour vérifier les champs à l'inscription. Ne jamais laisser ce console.log visible.
         setstateSignupForm({...stateSignupForm, [name]: value})
     } 
     

@@ -2,7 +2,6 @@ import './Home.css'
 import { useState, useContext, useEffect, isValidElement } from 'react';
 import {AuthContext} from "../../contexts/AuthContext"
 import { createNewComment, FuncLikeOrDislike, getAllComments } from '../../services/CommentApi'
-import { checkStorage } from '../../services/AuthApi';
 import Comments from '../Comments/Comments';
 import AddComment from '../Comments/AddComment';
 import axios from 'axios'
@@ -67,7 +66,7 @@ function AddComments (){
     ///////////// FONCTION DE SUPPRESSION D'UN COMMENTAIRE :   /////////////
     
     const deleteElement = id => {
-      console.log(id)
+      // console.log(id)
       
       const filteredStateComment = stateCommentsList.filter( comment => {
         return comment.id !== id;

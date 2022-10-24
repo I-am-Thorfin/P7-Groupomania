@@ -153,8 +153,7 @@ formDataEdition.append("image", userImageModification);
     modifyOneUser(auth.userId, formDataEdition)
 }  
 
-const userProfileAvatar = JSON.stringify(getUser.avatar)
-console.log(userProfileAvatar)
+
 const [previewProfilImg, setPreviewProfilImg] = useState()
 
 const [modalCheckProfileImg, setModalCHeckProfileImg] = useState(false)
